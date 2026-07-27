@@ -44,7 +44,7 @@ export default function CertificationsPage() {
         description="The certifications came first, while taking client work. The degree came after the studio was already running."
       />
 
-      <Section index="01 / Professional certifications">
+      <Section>
         <SectionHeader
           eyebrow="DigiSkills.pk"
           title="National digital skills programme."
@@ -96,7 +96,7 @@ export default function CertificationsPage() {
         </Reveal>
       </Section>
 
-      <Section tone="soft" index="02 / Academic qualifications">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Formal education"
           title="Studied alongside building."

@@ -85,7 +85,7 @@ export default function SpeakingPage() {
         </div>
       </PageHeader>
 
-      <Section index="01 / Engagements">
+      <Section>
         <SectionHeader
           eyebrow="Recent and ongoing"
           title="Where the work has been delivered."
@@ -140,7 +140,7 @@ export default function SpeakingPage() {
         </RevealGroup>
       </Section>
 
-      <Section tone="soft" index="02 / Topics">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="What I speak about"
           title="Four topics I can take questions on."
@@ -167,7 +167,7 @@ export default function SpeakingPage() {
       </Section>
 
       {/* Media kit */}
-      <Section index="03 / Media kit">
+      <Section>
         <Reveal>
           <div className="rounded-[var(--radius)] border border-line bg-bg-elevated p-8 sm:p-10">
             <p className="eyebrow mb-6">For organisers and press</p>

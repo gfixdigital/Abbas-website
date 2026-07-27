@@ -45,7 +45,7 @@ export default function BlogPage() {
         description="Every piece here comes out of a decision that had a cost attached. Filter by tag, or subscribe to the feed."
       />
 
-      <Section index="01 / All writing">
+      <Section>
         <PostList posts={posts} tags={postTags} />
       </Section>
 

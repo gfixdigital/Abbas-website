@@ -165,7 +165,7 @@ export const caseStudies: CaseStudy[] = [
       "We built the identity from logo creation through to full brand system, then took over social media management, content creation and digital marketing strategy as a retained engagement.",
     result:
       "GFix Digital now actively manages the studio's entire digital marketing strategy, making this the agency's longest-running retained client relationship.",
-    coverImageUrl: "https://ik.imagekit.io/vveiuli91/Pictures/project1.jpeg",
+    coverImageUrl: "https://ik.imagekit.io/vveiuli91/GFix%20Website%20Pictures/project1.jpeg?updatedAt=1784137960349",
     gallery: [],
     techUsed: [
       "Logo Design",

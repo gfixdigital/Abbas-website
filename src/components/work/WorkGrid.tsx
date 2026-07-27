@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Filter } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { CaseStudy } from "@/content";
 import { cn } from "@/lib/utils";
@@ -39,50 +40,46 @@ export function WorkGrid({ studies }: { studies: CaseStudy[] }) {
   return (
     <div>
       {/* Filter bar */}
-      <div
-        role="group"
-        aria-label="Filter projects by category"
-        className="hide-scrollbar mb-10 flex gap-2 overflow-x-auto pb-1"
-      >
-        {categories.map((option) => {
-          const active = option === category;
-          return (
-            <button
-              key={option}
-              type="button"
-              onClick={() => setCategory(option)}
-              aria-pressed={active}
-              className={cn(
-                "group relative shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
-                active
-                  ? "border-brand text-white"
-                  : "border-line text-muted hover:border-line-strong hover:text-ink",
-              )}
-            >
-              {active && (
-                <motion.span
-                  layoutId={reduce ? undefined : "work-filter"}
-                  className="absolute inset-0 -z-10 rounded-full bg-brand"
-                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                />
-              )}
-              <span className="relative">
+      <div className="flex flex-wrap items-center gap-3 border-b border-line pb-6">
+        <div className="flex items-center gap-2 font-mono text-xs text-muted mr-2">
+          <Filter size={14} /> FILTER BY:
+        </div>
+        <div
+          role="group"
+          aria-label="Filter projects by category"
+          className="flex flex-wrap gap-2"
+        >
+          {categories.map((option) => {
+            const active = option === category;
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setCategory(option)}
+                aria-pressed={active}
+                className={cn(
+                  "px-4 py-2 rounded-lg font-mono text-xs font-semibold transition-all",
+                  active
+                    ? "bg-brand text-white shadow-xs"
+                    : "bg-bg-elevated text-muted border border-line hover:border-ink",
+                )}
+              >
                 {option}
                 <span
                   className={cn(
-                    "ml-2 font-mono text-[10px] tabular-nums",
+                    "ml-1.5 tabular-nums",
                     active ? "text-white/65" : "text-muted/70",
                   )}
                 >
                   {counts.get(option) ?? 0}
                 </span>
-              </span>
-            </button>
-          );
-        })}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <motion.ul layout={!reduce} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.ul layout={!reduce} className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout" initial={false}>
           {filtered.map((study, index) => (
             <motion.li

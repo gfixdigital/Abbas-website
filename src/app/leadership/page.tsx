@@ -100,7 +100,7 @@ export default function LeadershipPage() {
       />
 
       {/* Convictions — the substance of the page */}
-      <Section index="01 / Operating convictions">
+      <Section>
         <SectionHeader
           eyebrow="What I believe about this work"
           title="Five positions, each with a cost attached."
@@ -129,7 +129,7 @@ export default function LeadershipPage() {
       </Section>
 
       {/* Structure */}
-      <Section tone="soft" index="02 / Structure">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="How the studio is organised"
           title="Six departments with real ownership."
@@ -154,7 +154,7 @@ export default function LeadershipPage() {
       </Section>
 
       {/* The dual ledger, at scale */}
-      <Section tone="dark" index="03 / Outcomes" className="grain">
+      <Section tone="dark" className="grain">
         <SectionHeader
           tone="dark"
           eyebrow="Where it has got to"
@@ -206,7 +206,7 @@ export default function LeadershipPage() {
       </Section>
 
       {/* Process + principles */}
-      <Section index="04 / Delivery">
+      <Section>
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <SectionHeader

@@ -74,7 +74,7 @@ export default function AboutPage() {
       </PageHeader>
 
       {/* Portrait + long bio */}
-      <Section index="01 / Biography">
+      <Section>
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
           <Reveal className="lg:sticky lg:top-32 lg:self-start">
             <div className="relative aspect-[3/4] overflow-hidden rounded-[var(--radius)] border border-line bg-bg-soft">
@@ -140,7 +140,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Current roles — the dual track made explicit */}
-      <Section tone="soft" index="02 / Right now">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Concurrent roles"
           title="Four commitments, one calendar."
@@ -192,7 +192,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Principles */}
-      <Section index="03 / Principles">
+      <Section>
         <SectionHeader
           eyebrow="How I work"
           title="Four things I actually hold to."
@@ -217,7 +217,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Education, certifications, awards */}
-      <Section tone="soft" index="04 / Background">
+      <Section tone="soft">
         <div className="grid gap-14 lg:grid-cols-3 lg:gap-12">
           <div>
             <Reveal>

@@ -28,7 +28,7 @@ export function Section({
       className={cn(
         "relative",
         tone === "soft" && "bg-bg-soft",
-        tone === "dark" && "bg-[#0b0f19] text-white",
+        tone === "dark" && "bg-black text-white",
         className,
       )}
     >

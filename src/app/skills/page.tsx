@@ -47,7 +47,7 @@ export default function SkillsPage() {
         description="These began as a freelance practice, not a job description. The proficiency figures are a self-assessment against commercial delivery, not a certification score."
       />
 
-      <Section index="01 / Disciplines">
+      <Section>
         <SectionHeader
           eyebrow="Capability breakdown"
           title="What I can take responsibility for."
@@ -83,7 +83,7 @@ export default function SkillsPage() {
         </RevealGroup>
       </Section>
 
-      <Section tone="soft" index="02 / Tooling">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Software & platforms"
           title="The tools behind the output."

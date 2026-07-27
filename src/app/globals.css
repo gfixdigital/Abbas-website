@@ -46,18 +46,19 @@
 }
 
 .dark {
-  --bg: #0b0f19;
-  --bg-soft: #0f172a;
-  --bg-elevated: #141b2d;
-  --line: #1f2a3f;
-  --line-strong: #2b3852;
+  --bg: #000000;
+  --bg-soft: #0a0a0a;
+  --bg-elevated: #141414;
+  --line: #1e1e1e;
+  --line-strong: #2a2a2a;
   --ink: #f4f6fb;
   --muted: #9aa3b8;
-  --ink-inverse: #0b0f19;
+  --ink-inverse: #000000;
+  color-scheme: dark;
 
-  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 30px 60px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 30px 60px rgba(0, 0, 0, 0.7);
 }
 
 @theme inline {
@@ -145,30 +146,50 @@ p {
 /* Visible, branded focus on every interactive element */
 :focus-visible {
   outline: 2px solid var(--brand-blue);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline-offset: 2px;
+}
+
+/* Remove the global focus ring on the command palette search input */
+[cmdk-input],
+#newsletter-email {
+  outline: none !important;
+}
+
+.dark select,
+.dark [role="listbox"],
+.dark [role="option"] {
+  color-scheme: dark !important;
+}
+
+.dark select option {
+  background-color: #141414 !important;
+  color: #f4f6fb !important;
 }
 
 ::selection {
-  background: var(--brand-blue);
-  color: #fff;
+  background: var(--accent);
+  color: var(--ink);
 }
 
-/* Scrollbar — subtle, matches the line token */
+/* Scrollbar — thin, amber-accented */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-soft);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--line-strong);
   border-radius: 999px;
-  border: 2px solid var(--bg-soft);
+  transition: background 0.2s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: var(--accent);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
 }
 
 /* ---------------------------------------------------------------------------
@@ -216,6 +237,34 @@ p {
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+}
+
+/* Work card hover: amber glow + border shift + image scale */
+.work-card {
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.work-card:hover {
+  box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.2);
+  border-color: var(--brand-blue);
+}
+.work-card:hover .project-image {
+  transform: scale(1.02);
+}
+
+/* Amber glow: soft amber shadow on hover */
+.amber-glow:hover {
+  box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.25);
+  border-color: var(--accent);
+}
+
+/* Amber pulse: breathing dot for status indicators */
+.amber-pulse {
+  animation: pulse-amber 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-amber {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .7; transform: scale(1.1); }
 }
 
 /* ---------------------------------------------------------------------------

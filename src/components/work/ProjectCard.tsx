@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { CaseStudy } from "@/content";
@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 
 /**
  * Interactive project card. Linear-style: a quiet resting state, a 1px border
- * that warms to brand on hover, and image scale as the only movement.
+ * that warms to brand on hover, amber glow shadow, and image scale as movement.
  */
 export function ProjectCard({
   study,
@@ -25,8 +25,7 @@ export function ProjectCard({
       <Link
         href={`/projects/${study.slug}`}
         className={cn(
-          "flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-bg-elevated",
-          "transition-all duration-500 hover:border-brand/45 hover:shadow-[var(--shadow-md)]",
+          "work-card flex h-full flex-col overflow-hidden rounded-[var(--radius)] border border-line bg-bg-elevated",
         )}
       >
         <div
@@ -46,7 +45,7 @@ export function ProjectCard({
                   : "(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
               }
               priority={priority}
-              className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+              className="project-image object-cover transition-transform duration-500"
             />
           ) : (
             <div className="grid h-full place-items-center">
@@ -57,7 +56,10 @@ export function ProjectCard({
           )}
 
           <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-            <Badge variant="mono" className="bg-bg/85 backdrop-blur-sm">
+            <Badge
+              variant="mono"
+              className="bg-accent/10 text-accent border-accent/30 backdrop-blur-sm"
+            >
               {study.category}
             </Badge>
             {study.track === "academy" && (
@@ -65,6 +67,12 @@ export function ProjectCard({
                 Academy
               </Badge>
             )}
+          </div>
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+            <span className="bg-accent text-ink font-mono text-xs px-4 py-2 rounded-lg font-bold flex items-center gap-2">
+              EXPLORE CASE STUDY <ArrowRight size={14} />
+            </span>
           </div>
         </div>
 

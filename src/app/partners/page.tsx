@@ -83,7 +83,7 @@ export default async function PartnersPage() {
         </Magnetic>
       </PageHeader>
 
-      <Section index="01 / Current partners">
+      <Section>
         <SectionHeader
           eyebrow="Who we work with"
           title={`${partners.length} standing collaboration${partners.length === 1 ? "" : "s"}.`}
@@ -157,7 +157,7 @@ export default async function PartnersPage() {
         </RevealGroup>
       </Section>
 
-      <Section tone="soft" index="02 / How partnerships work">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Four kinds of arrangement"
           title="What we actually exchange."
@@ -194,7 +194,7 @@ export default async function PartnersPage() {
         </Reveal>
       </Section>
 
-      <Section index="03 / Work with us" containerClassName="py-20">
+      <Section containerClassName="py-20">
         <Reveal>
           <div className="flex flex-col items-start gap-7 rounded-[var(--radius)] border border-line bg-bg-elevated p-8 sm:p-12">
             <span className="grid h-12 w-12 place-items-center rounded-xl border border-accent/25 bg-accent/8 text-accent">

@@ -131,7 +131,7 @@ export function ContactForm() {
                 <Input
                   id="name"
                   autoComplete="name"
-                  placeholder="Jane Khan"
+                  placeholder="Muhammad Abbas"
                   aria-invalid={Boolean(errors.name)}
                   {...register("name")}
                 />
@@ -147,7 +147,7 @@ export function ContactForm() {
                   id="email"
                   type="email"
                   autoComplete="email"
-                  placeholder="jane@company.com"
+                  placeholder="abbas@gfixdigital.com"
                   aria-invalid={Boolean(errors.email)}
                   {...register("email")}
                 />
@@ -182,6 +182,7 @@ export function ContactForm() {
                   id="topic"
                   aria-invalid={Boolean(errors.topic)}
                   className={selectClass}
+                  style={{ colorScheme: "dark" }}
                   {...register("topic")}
                 >
                   {Object.entries(TOPIC_LABELS).map(([value, label]) => (
@@ -198,7 +199,7 @@ export function ContactForm() {
                 hint="Optional"
                 error={errors.budget?.message}
               >
-                <select id="budget" className={selectClass} {...register("budget")}>
+                <select id="budget" className={selectClass} style={{ colorScheme: "dark" }} {...register("budget")}>
                   {Object.entries(BUDGET_LABELS).map(([value, label]) => (
                     <option key={value} value={value}>
                       {label}

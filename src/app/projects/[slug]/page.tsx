@@ -163,7 +163,7 @@ export default async function CaseStudyPage({ params }: Params) {
       )}
 
       {/* Narrative: brief, solution, result */}
-      <Section index="01 / The work">
+      <Section>
         <div className="grid gap-14 lg:grid-cols-[1fr_2fr] lg:gap-20">
           <Reveal className="lg:sticky lg:top-32 lg:self-start">
             <p className="eyebrow mb-5">Capabilities applied</p>
@@ -203,7 +203,7 @@ export default async function CaseStudyPage({ params }: Params) {
       </Section>
 
       {/* Next projects */}
-      <Section tone="soft" index="02 / More work">
+      <Section tone="soft">
         <Reveal className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <h2 className="font-display text-[clamp(1.5rem,3vw,2.25rem)] font-semibold tracking-[-0.03em] text-ink">
             Other projects

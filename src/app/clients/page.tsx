@@ -48,7 +48,7 @@ export default function ClientsPage() {
         description="The range is deliberate. A studio that only serves one tier of client never learns what the next tier expects."
       />
 
-      <Section index="01 / Partnerships">
+      <Section>
         <SectionHeader
           eyebrow="Selected clients"
           title="Named with permission, drawn from published work."
@@ -110,7 +110,7 @@ export default function ClientsPage() {
         </RevealGroup>
       </Section>
 
-      <Section tone="soft" index="02 / Sectors">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Where the work sits"
           title="Six sectors, one delivery standard."

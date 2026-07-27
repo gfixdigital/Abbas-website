@@ -1,4 +1,4 @@
-import { ArrowUpRight, Quote } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -60,7 +60,7 @@ export function ClientMarquee() {
 
 export function Introduction() {
   return (
-    <Section index="01 / Introduction">
+    <Section>
       <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-24">
         <Reveal className="lg:sticky lg:top-32 lg:self-start">
           <p className="eyebrow mb-6">Who I am</p>
@@ -128,10 +128,8 @@ export function Introduction() {
 
 export function CompanySnapshot() {
   return (
-    <Section tone="dark" index="02 / The company" className="grain">
-      <BackgroundDots className="opacity-[0.07]" />
-
-      <div className="relative">
+    <div className="relative overflow-hidden bg-brand py-20 lg:py-28">
+      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <SectionHeader
           tone="dark"
           eyebrow="GFix Digital"
@@ -141,14 +139,7 @@ export function CompanySnapshot() {
 
         <RevealGroup className="grid gap-px overflow-hidden rounded-[var(--radius)] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
           {metrics.map((metric) => (
-            <RevealItem key={metric.label} className="bg-[#0b0f19] p-7 lg:p-8">
-              <span
-                className={cn(
-                  "mb-6 block h-px w-10",
-                  metric.track === "studio" ? "bg-brand-sky" : "bg-accent",
-                )}
-                aria-hidden="true"
-              />
+            <RevealItem key={metric.label} className="bg-black p-7 lg:p-8">
               <p className="font-display text-[clamp(2.25rem,4vw,3.25rem)] font-semibold leading-none tracking-[-0.04em] text-white">
                 <AnimatedCounter value={metric.value} suffix={metric.suffix} />
               </p>
@@ -181,12 +172,9 @@ export function CompanySnapshot() {
           </div>
         </Reveal>
       </div>
-    </Section>
+    </div>
   );
 }
-
-/* -------------------------------------------------------------------------- */
-/* Featured work                                                              */
 /* -------------------------------------------------------------------------- */
 
 export function FeaturedWork() {
@@ -224,7 +212,7 @@ export function FeaturedWork() {
 
 export function ServicesPreview() {
   return (
-    <Section tone="soft" index="04 / Capability">
+    <Section tone="soft">
       <SectionHeader
         eyebrow="What we deliver"
         title="Six disciplines, run by one team."
@@ -239,10 +227,10 @@ export function ServicesPreview() {
               <div className="mb-6 flex items-start justify-between gap-4">
                 <span
                   className={cn(
-                    "grid h-11 w-11 place-items-center rounded-xl border",
+                    "grid h-11 w-11 place-items-center rounded-xl border transition-colors",
                     service.track === "academy"
-                      ? "border-accent/25 bg-accent/8 text-accent"
-                      : "border-brand/20 bg-brand/8 text-brand",
+                      ? "border-accent/25 bg-accent/8 text-accent group-hover:bg-accent group-hover:text-white"
+                      : "border-brand/20 bg-brand/8 text-brand group-hover:bg-brand group-hover:text-white",
                   )}
                 >
                   <Icon name={service.iconName} />
@@ -287,7 +275,7 @@ export function ServicesPreview() {
 
 export function LeadershipPhilosophy() {
   return (
-    <Section index="05 / How we work">
+    <Section>
       <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-24">
         <div>
           <SectionHeader
@@ -300,9 +288,9 @@ export function LeadershipPhilosophy() {
 
           <RevealGroup className="space-y-px overflow-hidden rounded-[var(--radius)] border border-line bg-line">
             {valuePillars.map((pillar) => (
-              <RevealItem key={pillar.title} className="bg-bg-elevated p-6">
+              <RevealItem key={pillar.title} className="bg-bg-elevated p-6 group">
                 <div className="flex items-start gap-4">
-                  <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand/8 text-brand">
+                  <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand/8 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
                     <Icon name={pillar.iconName} className="h-4 w-4" />
                   </span>
                   <div>
@@ -364,7 +352,7 @@ export function TechStack() {
   const half = Math.ceil(tools.length / 2);
 
   return (
-    <Section tone="soft" index="06 / Toolkit" containerClassName="py-20 lg:py-24">
+    <Section tone="soft" containerClassName="py-20 lg:py-24">
       <SectionHeader
         align="centered"
         eyebrow="Technology & tooling"
@@ -405,33 +393,24 @@ export function TechStack() {
 
 export function ContactCTA() {
   return (
-    <Section tone="dark" index="08 / Next step" className="grain overflow-hidden">
-      <BackgroundDots className="opacity-[0.06]" />
-
-      <div className="relative grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-20">
-        <div>
-          <Reveal>
-            <p className="eyebrow mb-6 text-white/45">Start something</p>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="max-w-2xl font-display text-[clamp(2rem,5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-white">
-              <Quote
-                className="mb-6 h-8 w-8 text-accent"
-                aria-hidden="true"
-              />
-              Tell me what you are building, and I will tell you what it takes.
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-7 max-w-lg text-[15px] leading-relaxed text-white/60 sm:text-base">
-              Client work, a training cohort, a speaking slot, or a media
-              partnership. Every message reaches me directly.
-            </p>
-          </Reveal>
-        </div>
-
+    <div className="relative overflow-hidden bg-brand py-20 lg:py-28">
+      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 text-center max-w-3xl">
+        <Reveal>
+          <p className="eyebrow mb-6 text-white/50">Start something</p>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.04em] text-white">
+            Tell me what you are building, and I will tell you what it takes.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mt-6 text-[15px] leading-relaxed text-blue-100 sm:text-base">
+            Client work, a training cohort, a speaking slot, or a media
+            partnership. Every message reaches me directly.
+          </p>
+        </Reveal>
         <Reveal delay={0.15}>
-          <div className="flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-end">
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Magnetic>
               <Button asChild size="lg" variant="accent">
                 <Link href="/contact">
@@ -441,13 +420,13 @@ export function ContactCTA() {
               </Button>
             </Magnetic>
             <Magnetic>
-              <Button asChild size="lg" variant="glass">
+              <Button asChild size="lg" variant="ghost" className="bg-white/10 text-white hover:bg-white/20">
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>
               </Button>
             </Magnetic>
           </div>
         </Reveal>
       </div>
-    </Section>
+    </div>
   );
 }

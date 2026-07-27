@@ -50,7 +50,7 @@ export default function ExperiencePage() {
         description="Every role below sits on one of two tracks: building the studio, or building the people. The community work runs underneath both."
       />
 
-      <Section index="01 / Timeline">
+      <Section>
         <SectionHeader
           eyebrow="Career"
           title="Roles and responsibilities."
@@ -139,7 +139,7 @@ export default function ExperiencePage() {
         </RevealGroup>
       </Section>
 
-      <Section tone="soft" index="02 / Education">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Academic"
           title="Studied while building."

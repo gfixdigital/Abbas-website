@@ -42,7 +42,7 @@ export default function ProjectsPage() {
         description="Nine projects that show the range: a custom storefront, an internationally branded initiative, event operations at scale, and training programmes that had to produce employable graduates."
       />
 
-      <Section index="01 / All projects">
+      <Section>
         <WorkGrid studies={caseStudies} />
       </Section>
 

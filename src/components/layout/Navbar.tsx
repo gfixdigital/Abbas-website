@@ -4,13 +4,13 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile } from "@/content";
 import { navGroups, primaryNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { openCommandPalette } from "./CommandPalette";
+import { openCommandPalette, toggleCommandPalette } from "./CommandPalette";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -18,6 +18,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const megaTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -40,7 +41,7 @@ export function Navbar() {
     };
   }, [mobileOpen]);
 
-  useEffect(() => {
+   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       setMobileOpen(false);
@@ -84,9 +85,6 @@ export function Navbar() {
             className="group flex shrink-0 items-center gap-2.5"
             aria-label="Muhammad Abbas, home"
           >
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-navy via-brand to-brand-sky font-display text-[13px] font-bold text-white">
-              MA
-            </span>
             <span className="hidden flex-col leading-none sm:flex">
               <span className="font-display text-[15px] font-semibold tracking-tight text-ink">
                 Muhammad Abbas
@@ -94,6 +92,9 @@ export function Navbar() {
               <span className="mt-0.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-muted">
                 {profile.title} · {profile.company}
               </span>
+            </span>
+            <span className="font-display text-[15px] font-semibold tracking-tight text-ink sm:hidden">
+              Muhammad Abbas
             </span>
           </Link>
 
@@ -120,45 +121,108 @@ export function Navbar() {
               </Link>
             ))}
 
-            <button
-              type="button"
-              onClick={() => setMegaOpen((prev) => !prev)}
-              aria-expanded={megaOpen}
-              aria-controls="mega-menu"
-              className={cn(
-                "ml-1 flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
-                megaOpen ? "text-ink" : "text-muted hover:text-ink",
-              )}
+            <div
+              className="relative"
+              onMouseEnter={() => {
+                if (megaTimer.current) clearTimeout(megaTimer.current);
+                setMegaOpen(true);
+              }}
+              onMouseLeave={() => {
+                megaTimer.current = setTimeout(() => setMegaOpen(false), 120);
+              }}
+              onFocus={() => setMegaOpen(true)}
             >
-              More
-              <svg
-                viewBox="0 0 12 12"
+              <button
+                type="button"
+                aria-expanded={megaOpen}
+                aria-haspopup="true"
+                aria-controls="mega-menu"
                 className={cn(
-                  "h-2.5 w-2.5 transition-transform duration-300",
-                  megaOpen && "rotate-180",
+                  "ml-1 flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
+                  megaOpen ? "text-ink" : "text-muted hover:text-ink",
                 )}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                aria-hidden="true"
               >
-                <path d="M2 4.5 6 8.5 10 4.5" strokeLinecap="round" />
-              </svg>
-            </button>
+                More
+                <svg
+                  viewBox="0 0 12 12"
+                  className={cn(
+                    "h-2.5 w-2.5 transition-transform duration-300",
+                    megaOpen && "rotate-180",
+                  )}
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <path d="M2 4.5 6 8.5 10 4.5" strokeLinecap="round" />
+                </svg>
+              </button>
+
+              {/* Mega menu */}
+              <AnimatePresence>
+                {megaOpen && (
+                  <motion.div
+                    id="mega-menu"
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                    transition={{ duration: 0.24, ease: [0.22, 0.61, 0.36, 1] }}
+                    className="hidden fixed left-1/2 top-[72px] z-[85] w-screen -translate-x-1/2 border-t border-line bg-bg/95 backdrop-blur-xl lg:block"
+                    onMouseEnter={() => {
+                      if (megaTimer.current) clearTimeout(megaTimer.current);
+                    }}
+                    onMouseLeave={() => {
+                      megaTimer.current = setTimeout(() => setMegaOpen(false), 120);
+                    }}
+                  >
+                    <div className="mx-auto grid max-w-[1400px] gap-8 px-12 py-10 md:grid-cols-4">
+                      {navGroups.map((group) => (
+                        <div key={group.label}>
+                          <p className="eyebrow mb-4">{group.label}</p>
+                          <ul className="space-y-1">
+                            {group.items.map((item) => (
+                              <li key={item.href}>
+                                <Link
+                                  href={item.href}
+                                  className="group block rounded-lg px-3 py-2 transition-colors hover:bg-bg-soft"
+                                >
+                                  <span className="flex items-center gap-1.5 text-sm font-medium text-ink">
+                                    {item.label}
+                                    <ArrowUpRight
+                                      className="h-3 w-3 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  {item.description && (
+                                    <span className="mt-0.5 block text-xs leading-snug text-muted">
+                                      {item.description}
+                                    </span>
+                                  )}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className="ml-auto flex items-center gap-2 lg:ml-4">
             <button
               type="button"
-              onClick={openCommandPalette}
+              onClick={toggleCommandPalette}
+              data-search-toggle
               aria-label="Search this site"
               className={cn(
-                "hidden h-9 items-center gap-2 rounded-full border border-line px-3",
-                "text-muted transition-colors hover:border-brand hover:text-brand sm:flex",
+                "grid h-9 w-9 place-items-center rounded-full text-muted transition-colors",
+                "hover:bg-bg-soft hover:text-ink",
               )}
             >
-              <Search className="h-3.5 w-3.5" aria-hidden="true" />
-              <kbd className="font-mono text-[10px] tracking-wider">⌘K</kbd>
+              <Search className="h-4 w-4" aria-hidden="true" />
             </button>
 
             <ThemeToggle />
@@ -181,62 +245,19 @@ export function Navbar() {
           </div>
         </nav>
 
-        {/* Mega menu */}
-        <AnimatePresence>
-          {megaOpen && (
-            <>
-              <button
-                type="button"
-                aria-label="Close menu"
-                onClick={() => setMegaOpen(false)}
-                className="fixed inset-0 top-[72px] -z-10 hidden cursor-default lg:block"
-              />
-              <motion.div
-                id="mega-menu"
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-                transition={{ duration: 0.24, ease: [0.22, 0.61, 0.36, 1] }}
-                className="hidden border-t border-line bg-bg/95 backdrop-blur-xl lg:block"
-              >
-                <div className="mx-auto grid max-w-[1400px] gap-8 px-12 py-10 md:grid-cols-4">
-                  {navGroups.map((group) => (
-                    <div key={group.label}>
-                      <p className="eyebrow mb-4">{group.label}</p>
-                      <ul className="space-y-1">
-                        {group.items.map((item) => (
-                          <li key={item.href}>
-                            <Link
-                              href={item.href}
-                              className="group block rounded-lg px-3 py-2 transition-colors hover:bg-bg-soft"
-                            >
-                              <span className="flex items-center gap-1.5 text-sm font-medium text-ink">
-                                {item.label}
-                                <ArrowUpRight
-                                  className="h-3 w-3 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
-                                  aria-hidden="true"
-                                />
-                              </span>
-                              {item.description && (
-                                <span className="mt-0.5 block text-xs leading-snug text-muted">
-                                  {item.description}
-                                </span>
-                              )}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      </header>
+        {/* Click-outside backdrop for mega menu — outside the More hover
+            container so it does not interfere with onMouseLeave detection. */}
+        {megaOpen && (
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setMegaOpen(false)}
+            className="fixed inset-0 top-[72px] -z-10 hidden cursor-default lg:block"
+          />
+        )}
 
-      {/* Mobile sheet */}
-      <AnimatePresence>
+        {/* Mobile sheet */}
+        <AnimatePresence>
         {mobileOpen && (
           <motion.div
             className="fixed inset-0 z-[90] lg:hidden"
@@ -276,6 +297,18 @@ export function Navbar() {
               </div>
 
               <div className="flex-1 overflow-y-auto px-5 py-6">
+                <Link
+                  href="/"
+                  className={cn(
+                    "flex items-center justify-between rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors mb-7",
+                    pathname === "/"
+                      ? "bg-bg-soft text-brand"
+                      : "text-ink hover:bg-bg-soft",
+                  )}
+                >
+                  Home
+                  <ArrowUpRight className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+                </Link>
                 {navGroups.map((group) => (
                   <div key={group.label} className="mb-7">
                     <p className="eyebrow mb-3">{group.label}</p>
@@ -316,6 +349,7 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      </header>
     </>
   );
 }

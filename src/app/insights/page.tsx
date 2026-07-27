@@ -73,7 +73,7 @@ export default function InsightsPage() {
 
       {/* Lead piece, given real weight rather than sitting in a uniform grid */}
       {lead && (
-        <Section index="01 / Latest">
+        <Section>
           <Reveal>
             <Link
               href={`/blog/${lead.slug}`}
@@ -123,7 +123,7 @@ export default function InsightsPage() {
       )}
 
       {/* Archive */}
-      <Section tone="soft" index="02 / Archive">
+      <Section tone="soft">
         <SectionHeader
           eyebrow={`${posts.length} pieces published`}
           title="Everything else."
@@ -181,7 +181,7 @@ export default function InsightsPage() {
       </Section>
 
       {/* Newsletter */}
-      <Section index="03 / Subscribe" containerClassName="py-20">
+      <Section containerClassName="py-20">
         <Reveal>
           <div className="grid gap-10 rounded-[var(--radius)] border border-line bg-bg-elevated p-8 sm:p-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <div>

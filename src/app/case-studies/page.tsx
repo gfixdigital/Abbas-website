@@ -46,7 +46,7 @@ export default function CaseStudiesPage() {
         description="The same projects as the grid view, presented as an index you can read rather than scan. Each entry links to the full write-up."
       />
 
-      <Section index="01 / Index">
+      <Section>
         <SectionHeader
           eyebrow={`${caseStudies.length} published studies`}
           title="Read in order, or jump to a discipline."

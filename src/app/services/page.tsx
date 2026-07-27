@@ -47,7 +47,7 @@ export default function ServicesPage() {
 
       <PageHeader
         eyebrow="Services"
-        title="Everything handled in-house, which is why the parts fit together."
+        title="Everything handled in house, which is why the parts fit together."
         description="Six disciplines across the studio and the academy. You can commission one of them or the whole chain."
       >
         <div className="flex flex-wrap gap-3">
@@ -68,7 +68,7 @@ export default function ServicesPage() {
       </PageHeader>
 
       {/* Studio services */}
-      <Section index="01 / Studio">
+      <Section>
         <SectionHeader
           eyebrow="Commercial work"
           title="For businesses and institutions."
@@ -85,7 +85,7 @@ export default function ServicesPage() {
       </Section>
 
       {/* Academy services */}
-      <Section tone="soft" index="02 / Academy">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Training & capability"
           title="For learners, teams and institutions."
@@ -102,7 +102,7 @@ export default function ServicesPage() {
       </Section>
 
       {/* Process */}
-      <Section index="03 / Engagement">
+      <Section>
         <SectionHeader
           eyebrow="How an engagement runs"
           title="Four stages, no surprises."

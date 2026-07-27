@@ -78,7 +78,7 @@ export default function MediaKitPage() {
       </PageHeader>
 
       {/* Identity facts */}
-      <Section index="01 / The facts">
+      <Section>
         <SectionHeader
           eyebrow="Exact wording"
           title="Please use these spellings."
@@ -111,7 +111,7 @@ export default function MediaKitPage() {
       </Section>
 
       {/* Biographies */}
-      <Section tone="soft" index="02 / Biography">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Three lengths"
           title="Pick the one that fits the space."
@@ -147,7 +147,7 @@ export default function MediaKitPage() {
       </Section>
 
       {/* Headshot */}
-      <Section index="03 / Photography">
+      <Section>
         <SectionHeader
           eyebrow="Headshot"
           title="One approved image."
@@ -199,7 +199,7 @@ export default function MediaKitPage() {
       </Section>
 
       {/* Key figures + brand */}
-      <Section tone="soft" index="04 / Figures & brand">
+      <Section tone="soft">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div>
             <Reveal>

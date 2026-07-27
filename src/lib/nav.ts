@@ -11,6 +11,7 @@ export type NavGroup = {
 
 /** Primary header links. Kept to five so the bar never wraps or crowds. */
 export const primaryNav: NavItem[] = [
+  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Work", href: "/projects" },
   { label: "Services", href: "/services" },
@@ -21,6 +22,7 @@ export const primaryNav: NavItem[] = [
 /**
  * Everything else lives in the mega menu and the footer. Grouping mirrors the
  * dual-track idea: what he builds, what he has earned, what he writes.
+ * Footer columns are balanced to ~5 items each for even visual weight.
  */
 export const navGroups: NavGroup[] = [
   {
@@ -34,32 +36,32 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Work",
+    label: "Studio",
     items: [
       { label: "Projects", href: "/projects", description: "All case studies, filterable" },
       { label: "Case Studies", href: "/case-studies", description: "Long-form project write-ups" },
       { label: "Services", href: "/services", description: "What the studio delivers" },
       { label: "Clients", href: "/clients", description: "Who he has worked with" },
       { label: "Partners", href: "/partners", description: "Standing collaborations" },
-      { label: "Gallery", href: "/gallery", description: "Visual archive" },
     ],
   },
   {
-    label: "Recognition",
+    label: "Resources",
     items: [
+      { label: "Gallery", href: "/gallery", description: "Visual archive" },
       { label: "Awards", href: "/awards", description: "Honours and commendations" },
       { label: "Certifications", href: "/certifications", description: "Credentials and training" },
       { label: "Testimonials", href: "/testimonials", description: "Client and student words" },
       { label: "Speaking & Media", href: "/speaking", description: "Sessions, summits, partnerships" },
-      { label: "Media Kit", href: "/media-kit", description: "Bio, headshot and brand facts" },
     ],
   },
   {
-    label: "Writing",
+    label: "Connect",
     items: [
+      { label: "Contact", href: "/contact", description: "Start a conversation" },
       { label: "Insights", href: "/insights", description: "Notes on building the studio" },
       { label: "Blog", href: "/blog", description: "All posts by tag" },
-      { label: "Contact", href: "/contact", description: "Start a conversation" },
+      { label: "Media Kit", href: "/media-kit", description: "Bio, headshot and brand facts" },
     ],
   },
 ];

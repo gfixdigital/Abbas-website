@@ -44,7 +44,7 @@ export default function AwardsPage() {
         description="Two honours, both earned alongside running the studio rather than instead of it."
       />
 
-      <Section index="01 / Honours">
+      <Section>
         <RevealGroup className="space-y-px overflow-hidden rounded-[var(--radius)] border border-line bg-line">
           {awards.map((award) => (
             <RevealItem key={award.title} className="bg-bg-elevated">
@@ -75,7 +75,7 @@ export default function AwardsPage() {
       </Section>
 
       {/* Delivery record, framed as the real evidence */}
-      <Section tone="soft" index="02 / Track record">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Beyond the certificates"
           title="The numbers are the better evidence."

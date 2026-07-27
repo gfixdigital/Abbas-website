@@ -49,7 +49,7 @@ export default async function ContactPage() {
         description="Client work, a training cohort, a speaking slot, or a media partnership. Every message reaches me directly, and I reply to all of them."
       />
 
-      <Section index="01 / Get in touch">
+      <Section>
         <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           {/* Direct channels */}
           <div>
@@ -180,7 +180,7 @@ export default async function ContactPage() {
         </div>
       </Section>
 
-      <Section tone="soft" index="02 / Book a call" containerClassName="py-16 sm:py-20">
+      <Section tone="soft" containerClassName="py-16 sm:py-20">
         <Reveal>
           <BookMeeting bookingUrl={settings?.bookingUrl ?? null} />
         </Reveal>

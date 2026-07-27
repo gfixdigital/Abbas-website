@@ -1,6 +1,7 @@
 "use client";
 
 import { Command } from "cmdk";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   FileText,
@@ -13,19 +14,21 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { caseStudies, posts, profile } from "@/content";
 import { navGroups } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 
 /**
- * Global search and navigation. Opens on Cmd/Ctrl+K or by clicking the
- * header trigger. Indexes routes, case studies and posts.
+ * Global search and navigation. Slides down from the header on
+ * Cmd/Ctrl+K or by clicking the search icon in the navbar.
  */
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const reduce = useReducedMotion();
   const { resolvedTheme, setTheme } = useTheme();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -33,16 +36,40 @@ export function CommandPalette() {
         event.preventDefault();
         setOpen((prev) => !prev);
       }
+      if (event.key === "Escape" && open) {
+        event.preventDefault();
+        setOpen(false);
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     const onOpen = () => setOpen(true);
+    const onToggle = () => setOpen((prev) => !prev);
     window.addEventListener("open-command-palette", onOpen);
-    return () => window.removeEventListener("open-command-palette", onOpen);
+    window.addEventListener("toggle-command-palette", onToggle);
+    return () => {
+      window.removeEventListener("open-command-palette", onOpen);
+      window.removeEventListener("toggle-command-palette", onToggle);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onClick = (e: MouseEvent) => {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(e.target as Node) &&
+        !(e.target as HTMLElement).closest("[data-search-toggle]")
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [open]);
 
   const go = useCallback(
     (href: string) => {
@@ -53,105 +80,112 @@ export function CommandPalette() {
   );
 
   return (
-    <Command.Dialog
-      open={open}
-      onOpenChange={setOpen}
-      label="Search this site"
-      className="fixed inset-0 z-[160]"
-    >
-      {/* Backdrop */}
-      <button
-        type="button"
-        aria-label="Close search"
-        onClick={() => setOpen(false)}
-        className="absolute inset-0 h-full w-full cursor-default bg-black/50 backdrop-blur-sm"
-      />
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          ref={panelRef}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+          transition={{ duration: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
+          className={cn(
+            "fixed left-0 right-0 top-[72px] z-[150] mx-auto w-full max-w-xl px-4",
+            "pt-2",
+          )}
+        >
+          <Command
+            label="Search this site"
+            className={cn(
+              "overflow-hidden rounded-2xl border border-line bg-bg-elevated",
+              "shadow-[0_16px_70px_-10px_rgba(0,0,0,0.15)]",
+            )}
+          >
+            <div className="flex items-center gap-3 border-b border-line px-4">
+              <Search className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
+              <Command.Input
+                placeholder="Search pages, projects, writing…"
+                className="h-12 w-full bg-transparent text-sm text-ink outline-none placeholder:text-muted/70 focus-visible:outline-none"
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="hidden shrink-0 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted transition-colors hover:text-ink sm:block"
+              >
+                ESC
+              </button>
+            </div>
 
-      <div
-        className={cn(
-          "absolute left-1/2 top-[12vh] w-[calc(100%-2rem)] max-w-xl -translate-x-1/2",
-          "overflow-hidden rounded-2xl border border-line bg-bg-elevated shadow-[var(--shadow-md)]",
-        )}
-      >
-        <div className="flex items-center gap-3 border-b border-line px-4">
-          <Search className="h-4 w-4 shrink-0 text-muted" aria-hidden="true" />
-          <Command.Input
-            placeholder="Search pages, projects, writing…"
-            className="h-14 w-full bg-transparent text-sm text-ink outline-none placeholder:text-muted/70"
-          />
-          <kbd className="hidden shrink-0 rounded border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted sm:block">
-            ESC
-          </kbd>
-        </div>
+            <Command.List className="max-h-[min(60vh,26rem)] overflow-y-auto p-2">
+              <Command.Empty className="px-3 py-8 text-center text-sm text-muted">
+                Nothing found. Try a project name or a page title.
+              </Command.Empty>
 
-        <Command.List className="max-h-[min(60vh,26rem)] overflow-y-auto p-2">
-          <Command.Empty className="px-3 py-8 text-center text-sm text-muted">
-            Nothing found. Try a project name or a page title.
-          </Command.Empty>
-
-          <Command.Group heading="Quick actions" className={groupClass}>
-            <Item onSelect={() => go("/contact")} icon={<Mail />} label="Get in touch" />
-            <Item onSelect={() => go("/resume")} icon={<FileText />} label="View résumé" />
-            <Item
-              onSelect={() => {
-                setTheme(resolvedTheme === "dark" ? "light" : "dark");
-                setOpen(false);
-              }}
-              icon={resolvedTheme === "dark" ? <Sun /> : <Moon />}
-              label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
-            />
-            <Item
-              onSelect={() => {
-                window.open(`mailto:${profile.email}`, "_self");
-                setOpen(false);
-              }}
-              icon={<Mail />}
-              label={`Email ${profile.email}`}
-            />
-          </Command.Group>
-
-          {navGroups.map((group) => (
-            <Command.Group key={group.label} heading={group.label} className={groupClass}>
-              {group.items.map((item) => (
+              <Command.Group heading="Quick actions" className={groupClass}>
+                <Item onSelect={() => go("/contact")} icon={<Mail />} label="Get in touch" />
+                <Item onSelect={() => go("/resume")} icon={<FileText />} label="View résumé" />
                 <Item
-                  key={item.href}
-                  onSelect={() => go(item.href)}
-                  icon={<User />}
-                  label={item.label}
-                  hint={item.description}
+                  onSelect={() => {
+                    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+                    setOpen(false);
+                  }}
+                  icon={resolvedTheme === "dark" ? <Sun /> : <Moon />}
+                  label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
                 />
+                <Item
+                  onSelect={() => {
+                    window.open(`mailto:${profile.email}`, "_self");
+                    setOpen(false);
+                  }}
+                  icon={<Mail />}
+                  label={`Email ${profile.email}`}
+                />
+              </Command.Group>
+
+              {navGroups.map((group) => (
+                <Command.Group key={group.label} heading={group.label} className={groupClass}>
+                  {group.items.map((item) => (
+                    <Item
+                      key={item.href}
+                      onSelect={() => go(item.href)}
+                      icon={<User />}
+                      label={item.label}
+                      hint={item.description}
+                    />
+                  ))}
+                </Command.Group>
               ))}
-            </Command.Group>
-          ))}
 
-          <Command.Group heading="Projects" className={groupClass}>
-            {caseStudies.map((study) => (
-              <Item
-                key={study.slug}
-                onSelect={() => go(`/projects/${study.slug}`)}
-                icon={<FolderOpen />}
-                label={study.title}
-                hint={study.category}
-                value={`${study.title} ${study.client} ${study.category} ${study.techUsed.join(" ")}`}
-              />
-            ))}
-          </Command.Group>
+              <Command.Group heading="Projects" className={groupClass}>
+                {caseStudies.map((study) => (
+                  <Item
+                    key={study.slug}
+                    onSelect={() => go(`/projects/${study.slug}`)}
+                    icon={<FolderOpen />}
+                    label={study.title}
+                    hint={study.category}
+                    value={`${study.title} ${study.client} ${study.category} ${study.techUsed.join(" ")}`}
+                  />
+                ))}
+              </Command.Group>
 
-          <Command.Group heading="Writing" className={groupClass}>
-            {posts.map((post) => (
-              <Item
-                key={post.slug}
-                onSelect={() => go(`/blog/${post.slug}`)}
-                icon={<FileText />}
-                label={post.title}
-                hint={post.tags.join(", ")}
-                value={`${post.title} ${post.excerpt} ${post.tags.join(" ")}`}
-              />
-            ))}
-          </Command.Group>
-        </Command.List>
-      </div>
-    </Command.Dialog>
+              <Command.Group heading="Writing" className={groupClass}>
+                {posts.map((post) => (
+                  <Item
+                    key={post.slug}
+                    onSelect={() => go(`/blog/${post.slug}`)}
+                    icon={<FileText />}
+                    label={post.title}
+                    hint={post.tags.join(", ")}
+                    value={`${post.title} ${post.excerpt} ${post.tags.join(" ")}`}
+                  />
+                ))}
+              </Command.Group>
+            </Command.List>
+          </Command>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -203,4 +237,9 @@ function Item({
 /** Opens the palette from anywhere without prop drilling. */
 export function openCommandPalette() {
   window.dispatchEvent(new Event("open-command-palette"));
+}
+
+/** Toggles the palette from anywhere without prop drilling. */
+export function toggleCommandPalette() {
+  window.dispatchEvent(new Event("toggle-command-palette"));
 }

@@ -6,7 +6,6 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { CommandPalette } from "./CommandPalette";
 import { BackToTop, ScrollProgress } from "@/components/motion/Interactions";
-import { CursorEffect } from "@/components/motion/Backdrop";
 import { LoadingScreen, PageTransition } from "@/components/motion/Transitions";
 
 /**
@@ -27,7 +26,6 @@ export function SiteChrome({ children }: { children: ReactNode }) {
     <>
       <LoadingScreen />
       <ScrollProgress />
-      <CursorEffect />
       <CommandPalette />
 
       <Navbar />

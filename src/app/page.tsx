@@ -12,7 +12,6 @@ import {
   ClientMarquee,
   CompanySnapshot,
   ContactCTA,
-  FeaturedWork,
   Introduction,
   LeadershipPhilosophy,
   ServicesPreview,
@@ -31,13 +30,12 @@ export default function HomePage() {
       <ClientMarquee />
       <Introduction />
       <CompanySnapshot />
-      <FeaturedWork />
       <ServicesPreview />
       <LeadershipPhilosophy />
       <TechStack />
 
       {/* Testimonials */}
-      <Section index="07 / In their words">
+      <Section>
         <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
           <div>
             <SectionHeader
@@ -59,7 +57,7 @@ export default function HomePage() {
       </Section>
 
       {/* Writing */}
-      <Section tone="soft" index="07b / Writing">
+      <Section tone="soft">
         <SectionHeader
           eyebrow="Insights"
           title="Notes from running both halves."

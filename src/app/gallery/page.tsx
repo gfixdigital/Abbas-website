@@ -53,7 +53,7 @@ export default async function GalleryPage() {
         description="A visual pass through delivered projects. Select any image to view it at full size, or read the full case study from the projects page."
       />
 
-      <Section index="01 / Archive">
+      <Section>
         <GalleryGrid images={images} categories={categories} />
       </Section>
 

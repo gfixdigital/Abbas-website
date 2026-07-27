@@ -45,14 +45,14 @@ export default function TestimonialsPage() {
       />
 
       {/* Featured carousel */}
-      <Section tone="dark" index="01 / Featured" className="grain">
+      <Section tone="dark" className="grain">
         <div className="relative mx-auto max-w-3xl">
           <TestimonialsCarousel testimonials={testimonials} tone="dark" />
         </div>
       </Section>
 
       {/* Full wall */}
-      <Section index="02 / Everything">
+      <Section>
         <SectionHeader
           eyebrow="All feedback"
           title="The complete set."

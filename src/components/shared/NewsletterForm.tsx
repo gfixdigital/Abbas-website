@@ -39,7 +39,7 @@ export function NewsletterForm() {
 
   return (
     <form onSubmit={onSubmit} className="max-w-sm">
-      <div className="flex items-center gap-2 rounded-full border border-line bg-bg p-1 transition-colors focus-within:border-brand">
+      <div className="flex items-center gap-2 rounded-full border border-line bg-bg p-1 transition-colors">
         <label htmlFor="newsletter-email" className="sr-only">
           Email address
         </label>

@@ -9,7 +9,7 @@ import { EASE_OUT_EXPO, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter, Magnetic } from "@/components/motion/Interactions";
-import { BackgroundGrid, MouseGlow } from "@/components/motion/Backdrop";
+import { MouseGlow } from "@/components/motion/Backdrop";
 
 /**
  * The one orchestrated moment on the site: a single staggered entrance,
@@ -35,7 +35,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-bg pt-32 sm:pt-40 lg:pt-44">
-      <BackgroundGrid />
       <MouseGlow />
 
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
@@ -46,17 +45,8 @@ export function Hero() {
         >
           {/* Status line */}
           <motion.div variants={item} className="mb-9 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-bg-soft px-3 py-1.5">
-              <span className="relative grid h-1.5 w-1.5 place-items-center">
-                <span className="absolute h-full w-full rounded-full bg-success" />
-                {!reduce && (
-                  <motion.span
-                    className="absolute h-full w-full rounded-full bg-success"
-                    animate={{ scale: [1, 2.6], opacity: [0.6, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-                  />
-                )}
-              </span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-bg-soft px-3.5 py-1.5">
+              <span className="h-2 w-2 rounded-full bg-brand animate-pulse" />
               <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted">
                 Available for work
               </span>
