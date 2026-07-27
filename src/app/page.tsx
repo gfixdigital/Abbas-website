@@ -1,103 +1,114 @@
-import Image from "next/image";
+import Link from "next/link";
+import { posts, testimonials } from "@/content";
+import { formatDate } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Section, SectionHeader } from "@/components/shared/Section";
+import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
+import { ArrowLink } from "@/components/motion/Interactions";
+import { TestimonialsCarousel } from "@/components/shared/TestimonialsCarousel";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/shared/JsonLd";
+import { Hero } from "@/components/home/Hero";
+import {
+  ClientMarquee,
+  CompanySnapshot,
+  ContactCTA,
+  FeaturedWork,
+  Introduction,
+  LeadershipPhilosophy,
+  ServicesPreview,
+  TechStack,
+} from "@/components/home/HomeSections";
 
-export default function Home() {
+export default function HomePage() {
+  const recentPosts = posts.slice(0, 3);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <OrganizationJsonLd />
+      <WebsiteJsonLd />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      <Hero />
+      <ClientMarquee />
+      <Introduction />
+      <CompanySnapshot />
+      <FeaturedWork />
+      <ServicesPreview />
+      <LeadershipPhilosophy />
+      <TechStack />
+
+      {/* Testimonials */}
+      <Section index="07 / In their words">
+        <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+          <div>
+            <SectionHeader
+              align="stacked"
+              eyebrow="Client & student feedback"
+              title="What people say afterwards."
+              description="Collected from clients, students and interns across the studio and the training programme."
+              className="mb-0"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="mt-8">
+              <ArrowLink href="/testimonials">All testimonials</ArrowLink>
+            </div>
+          </div>
+
+          <Reveal>
+            <TestimonialsCarousel testimonials={testimonials} />
+          </Reveal>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </Section>
+
+      {/* Writing */}
+      <Section tone="soft" index="07b / Writing">
+        <SectionHeader
+          eyebrow="Insights"
+          title="Notes from running both halves."
+          description="Occasional pieces on studio operations, training, and building a digital business where the market for one did not exist."
+          action={<ArrowLink href="/insights">All writing</ArrowLink>}
+        />
+
+        <RevealGroup className="grid gap-px overflow-hidden rounded-[var(--radius)] border border-line bg-line md:grid-cols-3">
+          {recentPosts.map((post) => (
+            <RevealItem key={post.slug} className="bg-bg-elevated">
+              <Link
+                href={`/blog/${post.slug}`}
+                className="group flex h-full flex-col p-7 transition-colors hover:bg-bg-soft/60"
+              >
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                    {formatDate(post.publishedAt, {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </span>
+                  <span aria-hidden="true" className="h-px w-4 bg-line-strong" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                    {post.readingMinutes} min
+                  </span>
+                </div>
+
+                <h3 className="font-display text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-brand">
+                  {post.title}
+                </h3>
+                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">
+                  {post.excerpt}
+                </p>
+
+                <ul className="mt-auto flex flex-wrap gap-1.5 pt-6">
+                  {post.tags.map((tag) => (
+                    <li key={tag}>
+                      <Badge>{tag}</Badge>
+                    </li>
+                  ))}
+                </ul>
+              </Link>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
+
+      <ContactCTA />
+    </>
   );
 }

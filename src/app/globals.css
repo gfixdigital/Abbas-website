@@ -1,26 +1,338 @@
 @import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+/* ---------------------------------------------------------------------------
+   Design tokens.
+   Brand values are lifted verbatim from gfixdigital.com's CSS custom
+   properties so the two sites read as one family. The personal layer adds
+   the near-black navy surface and the amber accent.
+   --------------------------------------------------------------------------- */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* GFix brand — do not drift from these */
+  --brand-navy: #1e3a8a;
+  --brand-blue: #2563eb;
+  --brand-sky: #3b82f6;
+  --brand-sky-soft: #60a5fa;
+
+  /* Personal layer */
+  --accent: #f59e0b;
+  --accent-soft: #fbbf24;
+
+  /* Light surfaces */
+  --bg: #ffffff;
+  --bg-soft: #f7f8fb;
+  --bg-elevated: #ffffff;
+  --line: #ececf1;
+  --line-strong: #dcdce4;
+  --ink: #11131a;
+  --muted: #5b6071;
+  --ink-inverse: #ffffff;
+
+  /* Status */
+  --danger: #ef4444;
+  --success: #10b981;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Elevation */
+  --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 14px 40px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 30px 60px rgba(37, 99, 235, 0.18);
+
+  --radius: 18px;
+}
+
+.dark {
+  --bg: #0b0f19;
+  --bg-soft: #0f172a;
+  --bg-elevated: #141b2d;
+  --line: #1f2a3f;
+  --line-strong: #2b3852;
+  --ink: #f4f6fb;
+  --muted: #9aa3b8;
+  --ink-inverse: #0b0f19;
+
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-muted: var(--muted);
+
+  --color-brand: var(--brand-blue);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-sky-soft: var(--brand-sky-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --radius-base: var(--radius);
+
+  --animate-accordion-down: accordion-down 0.3s var(--ease);
+  --animate-accordion-up: accordion-up 0.3s var(--ease);
+
+  /* Editorial type scale — tighter tracking as size increases */
+  --text-display: clamp(2.75rem, 8vw, 6.5rem);
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.04em;
+
+  --text-hero: clamp(2.25rem, 5.5vw, 4.25rem);
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.035em;
+
+  --text-title: clamp(1.75rem, 3.4vw, 2.75rem);
+  --text-title--line-height: 1.08;
+  --text-title--letter-spacing: -0.025em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* These reference the next/font variables directly rather than the theme
+   tokens: `@theme inline` intentionally does not emit its variables to :root,
+   so var(--font-sans) would be undefined here and the stack would collapse to
+   the system font. */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Visible, branded focus on every interactive element */
+:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--brand-blue);
+  color: #fff;
+}
+
+/* Scrollbar — subtle, matches the line token */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-soft);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 2px solid var(--bg-soft);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+   --------------------------------------------------------------------------- */
+
+@utility eyebrow {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@utility text-gradient-brand {
+  background: linear-gradient(
+    135deg,
+    var(--brand-navy) 0%,
+    var(--brand-blue) 45%,
+    var(--brand-sky) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Grain gives large flat surfaces a printed feel rather than a flat-CSS feel */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Keyframes used by the motion primitives
+   --------------------------------------------------------------------------- */
+
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - var(--marquee-gap, 0px) / 2));
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes aurora {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.06);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Print. Primarily for /resume, which is styled to produce a clean A4 CV.
+   --------------------------------------------------------------------------- */
+
+@media print {
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #ffffff;
+    --bg-elevated: #ffffff;
+    --ink: #000000;
+    --muted: #333333;
+    --line: #cccccc;
+    --line-strong: #999999;
+  }
+
+  /* Chrome and decoration have no place in a printed CV. */
+  header[class*="fixed"],
+  footer,
+  nav,
+  button:not([data-print-keep]) {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    font-size: 10.5pt;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  section {
+    break-inside: avoid;
+  }
+
+  @page {
+    size: A4;
+    margin: 16mm 14mm;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion — a hard global stop, not a suggestion.
+   Every Framer Motion variant is additionally gated in JS via useReducedMotion.
+   --------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
