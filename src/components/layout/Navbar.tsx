@@ -10,7 +10,7 @@ import { navGroups, primaryNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { openCommandPalette, toggleCommandPalette } from "./CommandPalette";
+import { toggleCommandPalette } from "./CommandPalette";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -27,8 +27,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close every overlay on navigation, and lock scroll while the mobile
-  // sheet is open.
   useEffect(() => {
     setMobileOpen(false);
     setMegaOpen(false);
@@ -41,7 +39,7 @@ export function Navbar() {
     };
   }, [mobileOpen]);
 
-   useEffect(() => {
+  useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       setMobileOpen(false);
@@ -78,8 +76,6 @@ export function Navbar() {
           aria-label="Primary"
           className="mx-auto flex h-16 max-w-[1400px] items-center gap-6 px-5 sm:h-[72px] sm:px-8 lg:px-12"
         >
-          {/* Wordmark. The monogram block is the only place the brand gradient
-              appears in the chrome, which keeps it from feeling decorative. */}
           <Link
             href="/"
             className="group flex shrink-0 items-center gap-2.5"
@@ -157,57 +153,6 @@ export function Navbar() {
                   <path d="M2 4.5 6 8.5 10 4.5" strokeLinecap="round" />
                 </svg>
               </button>
-
-              {/* Mega menu */}
-              <AnimatePresence>
-                {megaOpen && (
-                  <motion.div
-                    id="mega-menu"
-                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-                    transition={{ duration: 0.24, ease: [0.22, 0.61, 0.36, 1] }}
-                    className="hidden fixed left-1/2 top-[72px] z-[85] w-screen -translate-x-1/2 border-t border-line bg-bg/95 backdrop-blur-xl lg:block"
-                    onMouseEnter={() => {
-                      if (megaTimer.current) clearTimeout(megaTimer.current);
-                    }}
-                    onMouseLeave={() => {
-                      megaTimer.current = setTimeout(() => setMegaOpen(false), 120);
-                    }}
-                  >
-                    <div className="mx-auto grid max-w-[1400px] gap-8 px-12 py-10 md:grid-cols-4">
-                      {navGroups.map((group) => (
-                        <div key={group.label}>
-                          <p className="eyebrow mb-4">{group.label}</p>
-                          <ul className="space-y-1">
-                            {group.items.map((item) => (
-                              <li key={item.href}>
-                                <Link
-                                  href={item.href}
-                                  className="group block rounded-lg px-3 py-2 transition-colors hover:bg-bg-soft"
-                                >
-                                  <span className="flex items-center gap-1.5 text-sm font-medium text-ink">
-                                    {item.label}
-                                    <ArrowUpRight
-                                      className="h-3 w-3 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                  {item.description && (
-                                    <span className="mt-0.5 block text-xs leading-snug text-muted">
-                                      {item.description}
-                                    </span>
-                                  )}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
 
@@ -244,20 +189,69 @@ export function Navbar() {
             </button>
           </div>
         </nav>
+      </header>
 
-        {/* Click-outside backdrop for mega menu — outside the More hover
-            container so it does not interfere with onMouseLeave detection. */}
+      {/* Mega menu — rendered outside header to avoid clipping */}
+      <AnimatePresence>
         {megaOpen && (
-          <button
-            type="button"
-            aria-label="Close menu"
-            onClick={() => setMegaOpen(false)}
-            className="fixed inset-0 top-[72px] -z-10 hidden cursor-default lg:block"
-          />
+          <>
+            <motion.div
+              id="mega-menu"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+              transition={{ duration: 0.24, ease: [0.22, 0.61, 0.36, 1] }}
+              className="fixed left-1/2 top-[72px] z-[85] hidden w-screen -translate-x-1/2 border-t border-line bg-bg/95 backdrop-blur-xl lg:block"
+              onMouseEnter={() => {
+                if (megaTimer.current) clearTimeout(megaTimer.current);
+              }}
+              onMouseLeave={() => {
+                megaTimer.current = setTimeout(() => setMegaOpen(false), 120);
+              }}
+            >
+              <div className="mx-auto grid max-w-[1400px] gap-8 px-12 py-10 md:grid-cols-4">
+                {navGroups.map((group) => (
+                  <div key={group.label}>
+                    <p className="eyebrow mb-4">{group.label}</p>
+                    <ul className="space-y-1">
+                      {group.items.map((item) => (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            className="group block rounded-lg px-3 py-2 transition-colors hover:bg-bg-soft"
+                          >
+                            <span className="flex items-center gap-1.5 text-sm font-medium text-ink">
+                              {item.label}
+                              <ArrowUpRight
+                                className="h-3 w-3 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                                aria-hidden="true"
+                              />
+                            </span>
+                            {item.description && (
+                              <span className="mt-0.5 block text-xs leading-snug text-muted">
+                                {item.description}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setMegaOpen(false)}
+              className="fixed inset-0 top-[72px] -z-10 hidden cursor-default lg:block"
+            />
+          </>
         )}
+      </AnimatePresence>
 
-        {/* Mobile sheet */}
-        <AnimatePresence>
+      {/* Mobile sheet — rendered outside header to avoid clipping */}
+      <AnimatePresence>
         {mobileOpen && (
           <motion.div
             className="fixed inset-0 z-[90] lg:hidden"
@@ -349,7 +343,6 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-      </header>
     </>
   );
 }

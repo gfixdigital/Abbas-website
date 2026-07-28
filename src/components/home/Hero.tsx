@@ -9,7 +9,6 @@ import { EASE_OUT_EXPO, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter, Magnetic } from "@/components/motion/Interactions";
-import { MouseGlow } from "@/components/motion/Backdrop";
 
 /**
  * The one orchestrated moment on the site: a single staggered entrance,
@@ -35,8 +34,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-bg pt-32 sm:pt-40 lg:pt-44">
-      <MouseGlow />
-
       <div className="relative z-10 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <motion.div
           initial="hidden"
