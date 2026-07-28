@@ -27,7 +27,7 @@ export function GET(request: NextRequest) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(135deg, #0B0F19 0%, #1a2332 100%)",
+          background: "linear-gradient(135deg, #000000 0%, #141414 100%)",
           padding: "72px",
           fontFamily: "sans-serif",
         }}

@@ -46,14 +46,14 @@
 }
 
 .dark {
-  --bg: #0B0F19;
-  --bg-soft: #111827;
-  --bg-elevated: #1a2332;
+  --bg: #000000;
+  --bg-soft: #0a0a0a;
+  --bg-elevated: #141414;
   --line: #1e1e1e;
   --line-strong: #2a2a2a;
   --ink: #f4f6fb;
   --muted: #9aa3b8;
-  --ink-inverse: #0B0F19;
+  --ink-inverse: #000000;
   color-scheme: dark;
 
   --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.6);
@@ -162,7 +162,7 @@ p {
 }
 
 .dark select option {
-  background-color: #1a2332 !important;
+  background-color: #141414 !important;
   color: #f4f6fb !important;
 }
 
