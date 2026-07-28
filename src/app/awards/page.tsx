@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Award as AwardIcon } from "lucide-react";
-import { awards, metrics } from "@/content";
+import { getAwards, getMetrics } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
@@ -28,7 +28,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AwardsPage() {
+export default async function AwardsPage() {
+  const awards = await getAwards();
+  const metrics = await getMetrics();
+
   return (
     <>
       <BreadcrumbJsonLd

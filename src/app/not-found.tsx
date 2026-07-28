@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight, Search } from "lucide-react";
-import { profile } from "@/content";
+import { getProfile } from "@/lib/data";
 import { navGroups } from "@/lib/nav";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Interactions";
 import { BackgroundGrid } from "@/components/motion/Backdrop";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const profile = await getProfile();
   return (
     <div className="relative overflow-hidden">
       <BackgroundGrid />

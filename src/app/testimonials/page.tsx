@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Quote } from "lucide-react";
-import { testimonials } from "@/content";
+import { getTestimonials } from "@/lib/data";
 import { absoluteUrl, initials } from "@/lib/utils";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
@@ -28,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TestimonialsPage() {
+export default async function TestimonialsPage() {
+  const testimonials = await getTestimonials();
+
   return (
     <>
       <BreadcrumbJsonLd

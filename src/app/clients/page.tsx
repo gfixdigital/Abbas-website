@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
-import { caseStudies, clients, metrics } from "@/content";
+import { getCaseStudies, getClients, getMetrics } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
@@ -28,7 +28,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ClientsPage() {
+export default async function ClientsPage() {
+  const caseStudies = await getCaseStudies();
+  const clients = await getClients();
+  const metrics = await getMetrics();
   const partnershipMetric = metrics.find(
     (metric) => metric.label === "Client partnerships",
   );

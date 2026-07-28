@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { caseStudies } from "@/content";
+import { getCaseStudies } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { PageHeader, Section } from "@/components/shared/Section";
 import { WorkGrid } from "@/components/work/WorkGrid";
@@ -26,7 +26,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const caseStudies = await getCaseStudies();
+
   return (
     <>
       <BreadcrumbJsonLd

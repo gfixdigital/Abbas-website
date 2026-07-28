@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { caseStudies, posts } from "@/content";
+import { getCaseStudies, getPosts } from "@/lib/data";
 import { allRoutes } from "@/lib/nav";
 import { absoluteUrl } from "@/lib/utils";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [caseStudies, posts] = await Promise.all([getCaseStudies(), getPosts()]);
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = allRoutes.map((route) => ({

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { getPost, posts, profile } from "@/content";
+import { getPost as getContentPost, getPosts, getProfile } from "@/lib/data";
 import { absoluteUrl, formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,16 +15,18 @@ import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/shared/JsonLd";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const posts = await getPosts();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getContentPost(slug);
 
   if (!post) return { title: "Post not found" };
 
+  const profile = await getProfile();
   const ogUrl = `/api/og?title=${encodeURIComponent(post.title)}&eyebrow=${encodeURIComponent("Insights")}&meta=${encodeURIComponent(`${post.readingMinutes} min read`)}`;
 
   return {
@@ -52,10 +54,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function PostPage({ params }: Params) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getContentPost(slug);
 
   if (!post) notFound();
 
+  const posts = await getPosts();
+  const profile = await getProfile();
   const index = posts.findIndex((item) => item.slug === post.slug);
   const next = posts[index + 1] ?? posts[0];
 

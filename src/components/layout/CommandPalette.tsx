@@ -15,9 +15,10 @@ import {
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { caseStudies, posts, profile } from "@/content";
 import { navGroups } from "@/lib/nav";
+import { useProfile } from "@/lib/site-context";
 import { cn } from "@/lib/utils";
+import type { CaseStudy, Post } from "@/content";
 
 /**
  * Global search and navigation. Slides down from the header on
@@ -25,10 +26,23 @@ import { cn } from "@/lib/utils";
  */
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
+  const [studies, setStudies] = useState<CaseStudy[]>([]);
+  const [articles, setArticles] = useState<Post[]>([]);
   const router = useRouter();
   const reduce = useReducedMotion();
   const { resolvedTheme, setTheme } = useTheme();
   const panelRef = useRef<HTMLDivElement>(null);
+  const profile = useProfile();
+
+  useEffect(() => {
+    Promise.all([
+      import("@/lib/data").then((m) => m.getCaseStudies()),
+      import("@/lib/data").then((m) => m.getPosts()),
+    ]).then(([cs, ps]) => {
+      setStudies(cs);
+      setArticles(ps);
+    });
+  }, []);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -157,7 +171,7 @@ export function CommandPalette() {
               ))}
 
               <Command.Group heading="Projects" className={groupClass}>
-                {caseStudies.map((study) => (
+                {studies.map((study) => (
                   <Item
                     key={study.slug}
                     onSelect={() => go(`/projects/${study.slug}`)}
@@ -170,7 +184,7 @@ export function CommandPalette() {
               </Command.Group>
 
               <Command.Group heading="Writing" className={groupClass}>
-                {posts.map((post) => (
+                {articles.map((post) => (
                   <Item
                     key={post.slug}
                     onSelect={() => go(`/blog/${post.slug}`)}

@@ -1,19 +1,26 @@
-import { caseStudies, education, profile, skillGroups } from "@/content";
 import { absoluteUrl } from "@/lib/utils";
-import { socialLinks } from "@/content";
+import type { Profile, Education, SkillGroup, SocialLink, CaseStudy } from "@/content";
 
 function Script({ data }: { data: Record<string, unknown> }) {
   return (
     <script
       type="application/ld+json"
-      // Structured data is server-rendered from local content only, never
-      // from user input, so this is safe.
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   );
 }
 
-export function PersonJsonLd() {
+export function PersonJsonLd({
+  profile,
+  education,
+  skillGroups,
+  socialLinks,
+}: {
+  profile: Profile;
+  education: Education[];
+  skillGroups: SkillGroup[];
+  socialLinks: SocialLink[];
+}) {
   return (
     <Script
       data={{
@@ -51,7 +58,13 @@ export function PersonJsonLd() {
   );
 }
 
-export function OrganizationJsonLd() {
+export function OrganizationJsonLd({
+  profile,
+  socialLinks,
+}: {
+  profile: Profile;
+  socialLinks: SocialLink[];
+}) {
   return (
     <Script
       data={{
@@ -82,7 +95,7 @@ export function OrganizationJsonLd() {
   );
 }
 
-export function WebsiteJsonLd() {
+export function WebsiteJsonLd({ profile }: { profile: Profile }) {
   return (
     <Script
       data={{
@@ -117,24 +130,25 @@ export function BreadcrumbJsonLd({
   );
 }
 
-export function CaseStudyJsonLd({ slug }: { slug: string }) {
-  const study = caseStudies.find((item) => item.slug === slug);
-  if (!study) return null;
-
+export function CaseStudyJsonLd({
+  caseStudy,
+}: {
+  caseStudy: CaseStudy;
+}) {
   return (
     <Script
       data={{
         "@context": "https://schema.org",
         "@type": "CreativeWork",
-        name: study.title,
-        headline: study.title,
-        description: study.summary,
-        url: absoluteUrl(`/projects/${study.slug}`),
-        image: study.coverImageUrl ?? undefined,
-        dateCreated: study.year,
+        name: caseStudy.title,
+        headline: caseStudy.title,
+        description: caseStudy.summary,
+        url: absoluteUrl(`/projects/${caseStudy.slug}`),
+        image: caseStudy.coverImageUrl ?? undefined,
+        dateCreated: caseStudy.year,
         creator: { "@id": absoluteUrl("/#person") },
-        about: study.category,
-        keywords: study.techUsed.join(", "),
+        about: caseStudy.category,
+        keywords: caseStudy.techUsed.join(", "),
       }}
     />
   );

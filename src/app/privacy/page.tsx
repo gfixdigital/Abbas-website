@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { profile } from "@/content";
+import { getProfile } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { PageHeader, Section } from "@/components/shared/Section";
 import { LegalBody } from "@/components/shared/LegalBody";
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 
 const UPDATED = "27 July 2026";
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  const profile = await getProfile();
   return (
     <>
       <PageHeader

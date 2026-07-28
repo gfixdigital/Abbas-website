@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
-import { caseStudies, getCaseStudy, profile } from "@/content";
+import { getCaseStudy, getCaseStudies, getProfile } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,13 +15,14 @@ import { BreadcrumbJsonLd, CaseStudyJsonLd } from "@/components/shared/JsonLd";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const caseStudies = await getCaseStudies();
   return caseStudies.map((study) => ({ slug: study.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const study = getCaseStudy(slug);
+  const study = await getCaseStudy(slug);
 
   if (!study) return { title: "Project not found" };
 
@@ -51,15 +52,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function CaseStudyPage({ params }: Params) {
   const { slug } = await params;
-  const study = getCaseStudy(slug);
+  const study = await getCaseStudy(slug);
 
   if (!study) notFound();
 
+  const caseStudies = await getCaseStudies();
+  const profile = await getProfile();
   const others = caseStudies.filter((item) => item.slug !== study.slug).slice(0, 3);
 
   return (
     <>
-      <CaseStudyJsonLd slug={study.slug} />
+      <CaseStudyJsonLd caseStudy={study} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },

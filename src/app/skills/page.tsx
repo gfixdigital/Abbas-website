@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { skillGroups, tools } from "@/content";
+import { tools } from "@/content";
+import { getSkillGroups } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Icon } from "@/components/shared/Icon";
@@ -29,7 +30,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SkillsPage() {
+export default async function SkillsPage() {
+  const skillGroups = await getSkillGroups();
   const categories = Array.from(new Set(tools.map((tool) => tool.category)));
 
   return (

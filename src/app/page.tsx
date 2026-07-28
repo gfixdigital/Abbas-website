@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { posts, testimonials } from "@/content";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/shared/JsonLd";
 import { formatDate } from "@/lib/utils";
+import { getCaseStudies, getMetrics, getPosts, getProfile, getSocialLinks, getTestimonials } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Section, SectionHeader } from "@/components/shared/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { ArrowLink } from "@/components/motion/Interactions";
 import { TestimonialsCarousel } from "@/components/shared/TestimonialsCarousel";
-import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/shared/JsonLd";
 import { Hero } from "@/components/home/Hero";
 import {
   ClientMarquee,
@@ -18,15 +18,24 @@ import {
   TechStack,
 } from "@/components/home/HomeSections";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [profile, socialLinks, projects, metrics, testimonials, posts] = await Promise.all([
+    getProfile(),
+    getSocialLinks(),
+    getCaseStudies(),
+    getMetrics(),
+    getTestimonials(),
+    getPosts(),
+  ]);
+
   const recentPosts = posts.slice(0, 3);
 
   return (
     <>
-      <OrganizationJsonLd />
-      <WebsiteJsonLd />
+      <OrganizationJsonLd profile={profile} socialLinks={socialLinks} />
+      <WebsiteJsonLd profile={profile} />
 
-      <Hero />
+      <Hero projects={projects} metrics={metrics} profile={profile} />
       <ClientMarquee />
       <Introduction />
       <CompanySnapshot />

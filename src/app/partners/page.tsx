@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Handshake } from "lucide-react";
-import { clients, profile } from "@/content";
 import { absoluteUrl } from "@/lib/utils";
-import { getPartners } from "@/lib/data";
+import { getClients, getPartners, getProfile } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
@@ -60,7 +59,11 @@ const PARTNERSHIP_TYPES = [
 ];
 
 export default async function PartnersPage() {
-  const partners = await getPartners();
+  const [partners, clients, profile] = await Promise.all([
+    getPartners(),
+    getClients(),
+    getProfile(),
+  ]);
 
   return (
     <>

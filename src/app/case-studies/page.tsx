@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { caseStudies } from "@/content";
+import { getCaseStudies } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
@@ -30,7 +30,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage() {
+  const caseStudies = await getCaseStudies();
+
   return (
     <>
       <BreadcrumbJsonLd

@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
-import { profile } from "@/content";
+import { getProfile } from "@/lib/data";
 
 export const runtime = "edge";
 
@@ -11,7 +11,8 @@ export const runtime = "edge";
  * Uses the brand gradient and the dual-track rule so shared links look like
  * they came from this site.
  */
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
+  const profile = await getProfile();
   const { searchParams } = new URL(request.url);
 
   const title = searchParams.get("title") ?? profile.tagline;

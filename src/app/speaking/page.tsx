@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, ExternalLink, Mic } from "lucide-react";
-import { profile, speaking } from "@/content";
+import { getProfile, getSpeaking } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,10 @@ const TOPICS = [
   },
 ];
 
-export default function SpeakingPage() {
+export default async function SpeakingPage() {
+  const speaking = await getSpeaking();
+  const profile = await getProfile();
+
   return (
     <>
       <BreadcrumbJsonLd

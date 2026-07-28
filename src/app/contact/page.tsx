@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { profile, socialLinks } from "@/content";
+import { getProfile, getSiteSettings, getSocialLinks } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageHeader, Section } from "@/components/shared/Section";
@@ -10,29 +10,35 @@ import { SocialIcon } from "@/components/shared/SocialIcon";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { BookMeeting } from "@/components/contact/BookMeeting";
 import { BreadcrumbJsonLd } from "@/components/shared/JsonLd";
-import { getSiteSettings } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: `Get in touch with Muhammad Abbas about client projects, training cohorts, speaking engagements or media partnerships. Email ${profile.email}.`,
-  alternates: { canonical: absoluteUrl("/contact") },
-  openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
+  return {
     title: "Contact",
-    description: "Start a conversation about a project, cohort or partnership.",
-    url: absoluteUrl("/contact"),
-    images: [
-      {
-        url: `/api/og?title=${encodeURIComponent("Let us talk")}&eyebrow=${encodeURIComponent("Contact")}&meta=${encodeURIComponent(profile.email)}`,
-        width: 1200,
-        height: 630,
-        alt: "Contact",
-      },
-    ],
-  },
-};
+    description: `Get in touch with Muhammad Abbas about client projects, training cohorts, speaking engagements or media partnerships. Email ${profile.email}.`,
+    alternates: { canonical: absoluteUrl("/contact") },
+    openGraph: {
+      title: "Contact",
+      description: "Start a conversation about a project, cohort or partnership.",
+      url: absoluteUrl("/contact"),
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent("Let us talk")}&eyebrow=${encodeURIComponent("Contact")}&meta=${encodeURIComponent(profile.email)}`,
+          width: 1200,
+          height: 630,
+          alt: "Contact",
+        },
+      ],
+    },
+  };
+}
 
 export default async function ContactPage() {
-  const settings = await getSiteSettings();
+  const [profile, socialLinks, settings] = await Promise.all([
+    getProfile(),
+    getSocialLinks(),
+    getSiteSettings(),
+  ]);
 
   return (
     <>
@@ -182,7 +188,7 @@ export default async function ContactPage() {
 
       <Section tone="soft" containerClassName="py-16 sm:py-20">
         <Reveal>
-          <BookMeeting bookingUrl={settings?.bookingUrl ?? null} />
+          <BookMeeting bookingUrl={settings?.bookingUrl ?? null} profile={profile} />
         </Reveal>
       </Section>
     </>

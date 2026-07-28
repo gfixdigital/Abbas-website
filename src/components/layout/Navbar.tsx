@@ -5,7 +5,7 @@ import { ArrowUpRight, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { profile } from "@/content";
+import { useProfile } from "@/lib/site-context";
 import { navGroups, primaryNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { toggleCommandPalette } from "./CommandPalette";
 
 export function Navbar() {
+  const profile = useProfile();
   const pathname = usePathname();
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);

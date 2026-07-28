@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { valuePillars } from "@/content";
 import {
-  awards,
-  certifications,
-  education,
-  experience,
-  profile,
-  valuePillars,
-} from "@/content";
+  getAwards,
+  getCertifications,
+  getEducation,
+  getExperience,
+  getProfile,
+} from "@/lib/data";
 import { absoluteUrl, formatDateRange } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,26 +20,35 @@ import { ArrowLink, Magnetic } from "@/components/motion/Interactions";
 import { BreadcrumbJsonLd } from "@/components/shared/JsonLd";
 import { ContactCTA } from "@/components/home/HomeSections";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: profile.shortBio,
-  alternates: { canonical: absoluteUrl("/about") },
-  openGraph: {
-    title: `About ${profile.name}`,
-    description: profile.shortBio,
-    url: absoluteUrl("/about"),
-    images: [
-      {
-        url: `/api/og?title=${encodeURIComponent("Designer, trainer, agency lead.")}&eyebrow=${encodeURIComponent("About")}`,
-        width: 1200,
-        height: 630,
-        alt: `About ${profile.name}`,
-      },
-    ],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
 
-export default function AboutPage() {
+  return {
+    title: "About",
+    description: profile.shortBio,
+    alternates: { canonical: absoluteUrl("/about") },
+    openGraph: {
+      title: `About ${profile.name}`,
+      description: profile.shortBio,
+      url: absoluteUrl("/about"),
+      images: [
+        {
+          url: `/api/og?title=${encodeURIComponent("Designer, trainer, agency lead.")}&eyebrow=${encodeURIComponent("About")}`,
+          width: 1200,
+          height: 630,
+          alt: `About ${profile.name}`,
+        },
+      ],
+    },
+  };
+}
+
+export default async function AboutPage() {
+  const awards = await getAwards();
+  const certifications = await getCertifications();
+  const education = await getEducation();
+  const experience = await getExperience();
+  const profile = await getProfile();
   const current = experience.filter((role) => role.isCurrent);
 
   return (

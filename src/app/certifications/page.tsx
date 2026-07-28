@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ExternalLink, GraduationCap } from "lucide-react";
-import { certifications, education } from "@/content";
+import { getCertifications, getEducation } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
@@ -28,7 +28,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function CertificationsPage() {
+export default async function CertificationsPage() {
+  const certifications = await getCertifications();
+  const education = await getEducation();
+
   return (
     <>
       <BreadcrumbJsonLd

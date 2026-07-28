@@ -1,7 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
-import { profile } from "@/content";
+import { getProfile } from "@/lib/data";
 import { createAdminSupabase } from "@/lib/supabase/server";
 import {
   BUDGET_LABELS,
@@ -22,6 +22,7 @@ export type ContactResult =
  * that loses the least.
  */
 export async function submitContact(input: unknown): Promise<ContactResult> {
+  const profile = await getProfile();
   const parsed = contactSchema.safeParse(input);
 
   if (!parsed.success) {

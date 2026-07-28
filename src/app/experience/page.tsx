@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { education, experience, profile } from "@/content";
+import { getEducation, getExperience, getProfile } from "@/lib/data";
 import { absoluteUrl, durationFrom, formatDateRange } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -34,7 +34,11 @@ const TRACK_LABEL = {
   community: "Community",
 } as const;
 
-export default function ExperiencePage() {
+export default async function ExperiencePage() {
+  const education = await getEducation();
+  const experience = await getExperience();
+  const profile = await getProfile();
+
   return (
     <>
       <BreadcrumbJsonLd

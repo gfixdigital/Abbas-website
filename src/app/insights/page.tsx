@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Rss } from "lucide-react";
-import { postTags, posts } from "@/content";
+import { getPosts, getPostTags } from "@/lib/data";
 import { absoluteUrl, formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function InsightsPage() {
+export default async function InsightsPage() {
+  const posts = await getPosts();
+  const postTags = await getPostTags();
   const [lead, ...rest] = posts;
 
   return (

@@ -1,4 +1,4 @@
-import { posts, profile } from "@/content";
+import { getPosts, getProfile } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 
 function escapeXml(value: string) {
@@ -10,7 +10,8 @@ function escapeXml(value: string) {
     .replace(/'/g, "&apos;");
 }
 
-export function GET() {
+export async function GET() {
+  const [posts, profile] = await Promise.all([getPosts(), getProfile()]);
   const items = posts
     .map((post) =>
       [

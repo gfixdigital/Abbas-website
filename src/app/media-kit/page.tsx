@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Download, Mail } from "lucide-react";
-import { metrics, profile, socialLinks } from "@/content";
+import { getMetrics, getProfile, getSocialLinks } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
@@ -34,15 +34,18 @@ export const metadata: Metadata = {
 const BIO_25 =
   "Muhammad Abbas is the Founder and CEO of GFix Digital, a digital solutions agency and IT training hub based in Swat, Pakistan.";
 
-const BIO_60 = profile.shortBio;
-
 const BIO_120 = [
   "Muhammad Abbas is the Founder and CEO of GFix Digital, a digital solutions agency and IT training hub operating from Mingora, Swat.",
   "He started in graphic design and video editing and now leads a departmental studio delivering branding, web development, digital marketing and media production for clients across Pakistan and on internationally supported initiatives.",
   "Alongside the client work he serves as Administrator and IT Trainer at Modern Educational Proficiency Academy and as a Digital Skills Trainer with the BanoQabil IT Program, and has trained over 500 learners. He received the Iqra National University Talent Award in 2025.",
 ].join(" ");
 
-export default function MediaKitPage() {
+export default async function MediaKitPage() {
+  const metrics = await getMetrics();
+  const profile = await getProfile();
+  const socialLinks = await getSocialLinks();
+  const BIO_60 = profile.shortBio;
+
   return (
     <>
       <BreadcrumbJsonLd

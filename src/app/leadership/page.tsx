@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { metrics, processSteps, profile, valuePillars } from "@/content";
+import { processSteps, valuePillars } from "@/content";
+import { getMetrics, getProfile } from "@/lib/data";
 import { absoluteUrl, cn } from "@/lib/utils";
 import { PageHeader, Section, SectionHeader } from "@/components/shared/Section";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
@@ -83,7 +84,10 @@ const CONVICTIONS = [
   },
 ];
 
-export default function LeadershipPage() {
+export default async function LeadershipPage() {
+  const metrics = await getMetrics();
+  const profile = await getProfile();
+
   return (
     <>
       <BreadcrumbJsonLd

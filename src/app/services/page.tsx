@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import { processSteps, profile, services } from "@/content";
+import { processSteps } from "@/content";
+import { getProfile, getServices } from "@/lib/data";
 import { absoluteUrl, cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Interactions";
 import { BreadcrumbJsonLd } from "@/components/shared/JsonLd";
 import { ContactCTA } from "@/components/home/HomeSections";
+import type { Service } from "@/content";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -32,7 +34,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const [services, profile] = await Promise.all([getServices(), getProfile()]);
   const studio = services.filter((service) => service.track === "studio");
   const academy = services.filter((service) => service.track === "academy");
 
@@ -75,7 +78,7 @@ export default function ServicesPage() {
           description="Design, build, market and film. Commissioned individually or as a full programme of work."
         />
 
-        <RevealGroup className="grid gap-6 lg:grid-cols-2">
+        <RevealGroup className="grid gap-6 lg:grid-cols-3">
           {studio.map((service, index) => (
             <RevealItem key={service.slug} className="h-full">
               <ServiceCard service={service} index={index + 1} />
@@ -92,7 +95,7 @@ export default function ServicesPage() {
           description="Project-based programmes that end with portfolio work rather than a certificate. Delivered to cohorts, schools and corporate teams."
         />
 
-        <RevealGroup className="grid gap-6 lg:grid-cols-2">
+        <RevealGroup className="grid gap-6 lg:grid-cols-3">
           {academy.map((service, index) => (
             <RevealItem key={service.slug} className="h-full">
               <ServiceCard service={service} index={studio.length + index + 1} accent />
@@ -144,7 +147,7 @@ function ServiceCard({
   index,
   accent = false,
 }: {
-  service: (typeof services)[number];
+  service: Service;
   index: number;
   accent?: boolean;
 }) {

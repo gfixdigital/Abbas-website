@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { postTags, posts } from "@/content";
+import { getPosts, getPostTags } from "@/lib/data";
 import { absoluteUrl } from "@/lib/utils";
 import { PageHeader, Section } from "@/components/shared/Section";
 import { PostList } from "@/components/blog/PostList";
@@ -29,7 +29,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const posts = await getPosts();
+  const postTags = await getPostTags();
+
   return (
     <>
       <BreadcrumbJsonLd

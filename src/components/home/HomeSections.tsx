@@ -2,15 +2,11 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  clients,
-  featuredCaseStudies,
-  metrics,
   processSteps,
-  profile,
-  services,
   tools,
   valuePillars,
 } from "@/content";
+import { getClients, getFeaturedCaseStudies, getMetrics, getProfile, getServices } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,7 +27,9 @@ import { BackgroundDots } from "@/components/motion/Backdrop";
 /* Client marquee                                                             */
 /* -------------------------------------------------------------------------- */
 
-export function ClientMarquee() {
+export async function ClientMarquee() {
+  const clients = await getClients();
+
   return (
     <div className="border-y border-line bg-bg-soft py-10">
       <p className="eyebrow mb-7 text-center">
@@ -58,7 +56,9 @@ export function ClientMarquee() {
 /* Introduction — the dual track, stated plainly                              */
 /* -------------------------------------------------------------------------- */
 
-export function Introduction() {
+export async function Introduction() {
+  const profile = await getProfile();
+
   return (
     <Section>
       <div className="grid gap-14 lg:grid-cols-[1fr_1.15fr] lg:gap-24">
@@ -126,7 +126,9 @@ export function Introduction() {
 /* Company snapshot                                                           */
 /* -------------------------------------------------------------------------- */
 
-export function CompanySnapshot() {
+export async function CompanySnapshot() {
+  const [metrics, profile] = await Promise.all([getMetrics(), getProfile()]);
+
   return (
     <div className="relative overflow-hidden bg-brand py-20 lg:py-28">
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
@@ -177,8 +179,8 @@ export function CompanySnapshot() {
 }
 /* -------------------------------------------------------------------------- */
 
-export function FeaturedWork() {
-  const [lead, ...rest] = featuredCaseStudies;
+export async function FeaturedWork() {
+  const [lead, ...rest] = await getFeaturedCaseStudies();
 
   return (
     <Section index="03 / Selected work">
@@ -210,7 +212,9 @@ export function FeaturedWork() {
 /* Services                                                                   */
 /* -------------------------------------------------------------------------- */
 
-export function ServicesPreview() {
+export async function ServicesPreview() {
+  const services = await getServices();
+
   return (
     <Section tone="soft">
       <SectionHeader
@@ -391,7 +395,8 @@ export function TechStack() {
 /* Contact CTA                                                                */
 /* -------------------------------------------------------------------------- */
 
-export function ContactCTA() {
+export async function ContactCTA() {
+  const profile = await getProfile();
   return (
     <div className="relative overflow-hidden bg-brand py-20 lg:py-28">
       <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 text-center max-w-3xl">

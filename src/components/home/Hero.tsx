@@ -4,22 +4,23 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { caseStudies, metrics, profile } from "@/content";
 import { EASE_OUT_EXPO, stagger } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { AnimatedCounter, Magnetic } from "@/components/motion/Interactions";
+import type { CaseStudy, Metric, Profile } from "@/content";
 
-/**
- * The one orchestrated moment on the site: a single staggered entrance,
- * roughly 550ms end to end, then everything settles and stays still.
- *
- * The hero leads with real project thumbnails rather than a headshot. He is a
- * practitioner, so the work is the credential.
- */
-export function Hero() {
+export function Hero({
+  projects,
+  metrics,
+  profile,
+}: {
+  projects: CaseStudy[];
+  metrics: Metric[];
+  profile: Profile;
+}) {
   const reduce = useReducedMotion();
-  const thumbnails = caseStudies.filter((study) => study.coverImageUrl).slice(0, 6);
+  const thumbnails = projects.filter((study) => study.coverImageUrl).slice(0, 6);
 
   const item = reduce
     ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }

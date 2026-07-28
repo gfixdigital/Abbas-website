@@ -1,11 +1,12 @@
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
-import { profile, socialLinks } from "@/content";
+import { getProfile, getSocialLinks } from "@/lib/data";
 import { footerLegal, navGroups } from "@/lib/nav";
 import { SocialIcon } from "@/components/shared/SocialIcon";
 import { NewsletterForm } from "@/components/shared/NewsletterForm";
 
-export function Footer() {
+export async function Footer() {
+  const [profile, socialLinks] = await Promise.all([getProfile(), getSocialLinks()]);
   const year = new Date().getFullYear();
 
   return (

@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone, Printer } from "lucide-react";
+import { tools } from "@/content";
 import {
-  awards,
-  certifications,
-  education,
-  experience,
-  metrics,
-  profile,
-  skillGroups,
-  socialLinks,
-  tools,
-} from "@/content";
+  getAwards,
+  getCertifications,
+  getEducation,
+  getExperience,
+  getMetrics,
+  getProfile,
+  getSkillGroups,
+  getSocialLinks,
+} from "@/lib/data";
 import { absoluteUrl, formatDateRange } from "@/lib/utils";
 import { PageHeader, Section } from "@/components/shared/Section";
 import { Reveal } from "@/components/motion/Reveal";
@@ -37,7 +37,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ResumePage() {
+export default async function ResumePage() {
+  const awards = await getAwards();
+  const certifications = await getCertifications();
+  const education = await getEducation();
+  const experience = await getExperience();
+  const metrics = await getMetrics();
+  const profile = await getProfile();
+  const skillGroups = await getSkillGroups();
+  const socialLinks = await getSocialLinks();
+
   return (
     <>
       <BreadcrumbJsonLd
