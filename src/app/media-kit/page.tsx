@@ -232,9 +232,9 @@ export default function MediaKitPage() {
             </Reveal>
             <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {[
-                { name: "Brand blue", hex: "#2563eb" },
-                { name: "Deep navy", hex: "#1e3a8a" },
-                { name: "Sky", hex: "#3b82f6" },
+                { name: "Brand blue", hex: "#0066FF" },
+                { name: "Deep navy", hex: "#0047b3" },
+                { name: "Sky", hex: "#3385ff" },
                 { name: "Accent amber", hex: "#f59e0b" },
                 { name: "Ink", hex: "#11131a" },
                 { name: "Surface", hex: "#f7f8fb" },

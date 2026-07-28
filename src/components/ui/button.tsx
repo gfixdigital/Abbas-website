@@ -14,9 +14,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-ink text-ink-inverse hover:bg-brand hover:shadow-[0_10px_30px_-8px_rgba(37,99,235,0.55)]",
+          "bg-ink text-ink-inverse hover:bg-brand hover:shadow-[0_10px_30px_-8px_rgba(0,102,255,0.55)]",
         brand:
-          "bg-brand text-white hover:bg-brand-navy hover:shadow-[0_10px_30px_-8px_rgba(37,99,235,0.6)]",
+          "bg-brand text-white hover:bg-brand-navy hover:shadow-[0_10px_30px_-8px_rgba(0,102,255,0.6)]",
         accent:
           "bg-accent text-[#1a1204] hover:bg-accent-soft hover:shadow-[0_10px_30px_-8px_rgba(245,158,11,0.55)]",
         outline:

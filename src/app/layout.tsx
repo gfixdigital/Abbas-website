@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, JetBrains_Mono, Sora } from "next/font/google";
+import { Montserrat, Poppins, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { profile } from "@/content";
@@ -9,19 +9,20 @@ import { SiteChrome } from "@/components/layout/SiteChrome";
 import { Toaster } from "@/components/ui/sonner";
 import { PersonJsonLd } from "@/components/shared/JsonLd";
 
-/* Display: geometric and architectural. Body: humanist, quiet at small sizes.
+/* Display: geometric and architectural. Body: clean, modern.
    Mono carries the eyebrow labels and every number on the site. */
-const sora = Sora({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-sora",
+  variable: "--font-montserrat",
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["600", "700"],
 });
 
-const dmSans = DM_Sans({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-poppins",
   display: "swap",
+  weight: ["400", "500"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -91,7 +92,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B0F19" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -103,7 +104,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${sora.variable} ${dmSans.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${montserrat.variable} ${poppins.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <ThemeProvider>
           <PersonJsonLd />

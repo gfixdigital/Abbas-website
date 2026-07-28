@@ -59,7 +59,7 @@ export function LoadingScreen() {
             </motion.span>
             <div className="h-px w-40 overflow-hidden bg-white/15">
               <motion.div
-                className="h-full bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#3b82f6]"
+                className="h-full bg-gradient-to-r from-[#0047b3] via-[#0066FF] to-[#3385ff]"
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}

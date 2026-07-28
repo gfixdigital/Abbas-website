@@ -133,7 +133,7 @@ function buildHtmlBody(data: ContactInput) {
 
   return `
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:620px;color:#11131a">
-      <div style="height:3px;background:linear-gradient(90deg,#1e3a8a,#2563eb,#f59e0b)"></div>
+      <div style="height:3px;background:linear-gradient(90deg,#0047b3,#0066FF,#f59e0b)"></div>
       <h2 style="margin:28px 0 6px;font-size:19px">New enquiry from the portfolio</h2>
       <p style="margin:0 0 24px;color:#5b6071;font-size:13px">abbas.gfixdigital.com</p>
       <table style="width:100%;border-collapse:collapse;font-size:14px">

@@ -10,10 +10,10 @@
 
 :root {
   /* GFix brand — do not drift from these */
-  --brand-navy: #1e3a8a;
-  --brand-blue: #2563eb;
-  --brand-sky: #3b82f6;
-  --brand-sky-soft: #60a5fa;
+  --brand-navy: #0047b3;
+  --brand-blue: #0066FF;
+  --brand-sky: #3385ff;
+  --brand-sky-soft: #66a3ff;
 
   /* Personal layer */
   --accent: #f59e0b;
@@ -40,20 +40,20 @@
   /* Elevation */
   --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 14px 40px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 30px 60px rgba(37, 99, 235, 0.18);
+  --shadow-lg: 0 30px 60px rgba(0, 102, 255, 0.18);
 
   --radius: 18px;
 }
 
 .dark {
-  --bg: #000000;
-  --bg-soft: #0a0a0a;
-  --bg-elevated: #141414;
+  --bg: #0B0F19;
+  --bg-soft: #111827;
+  --bg-elevated: #1a2332;
   --line: #1e1e1e;
   --line-strong: #2a2a2a;
   --ink: #f4f6fb;
   --muted: #9aa3b8;
-  --ink-inverse: #000000;
+  --ink-inverse: #0B0F19;
   color-scheme: dark;
 
   --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.6);
@@ -81,8 +81,8 @@
   --color-danger: var(--danger);
   --color-success: var(--success);
 
-  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --radius-base: var(--radius);
@@ -124,7 +124,7 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "cv11", "ss01";
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -134,7 +134,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   text-wrap: balance;
 }
@@ -162,7 +162,7 @@ p {
 }
 
 .dark select option {
-  background-color: #141414 !important;
+  background-color: #1a2332 !important;
   color: #f4f6fb !important;
 }
 

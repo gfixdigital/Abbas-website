@@ -27,14 +27,14 @@ export function GET(request: NextRequest) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+          background: "linear-gradient(135deg, #0B0F19 0%, #1a2332 100%)",
           padding: "72px",
           fontFamily: "sans-serif",
         }}
       >
         {/* Top rule with the two track colours */}
         <div style={{ display: "flex", height: 4, width: "100%" }}>
-          <div style={{ flex: 2, background: "#2563eb" }} />
+          <div style={{ flex: 2, background: "#0066FF" }} />
           <div style={{ flex: 1, background: "#f59e0b" }} />
         </div>
 
@@ -45,7 +45,7 @@ export function GET(request: NextRequest) {
               fontSize: 20,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#60a5fa",
+              color: "#3385ff",
               marginBottom: 28,
             }}
           >
@@ -84,7 +84,7 @@ export function GET(request: NextRequest) {
                 width: 48,
                 height: 48,
                 borderRadius: 12,
-                background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%)",
+                background: "linear-gradient(135deg, #0047b3 0%, #0066FF 50%, #3385ff 100%)",
                 color: "#fff",
                 fontSize: 20,
                 fontWeight: 700,

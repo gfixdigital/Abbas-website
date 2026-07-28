@@ -106,7 +106,7 @@ export function SpotlightCard({
   );
 
   const border =
-    useMotionTemplate`radial-gradient(240px circle at ${x}px ${y}px, rgba(37,99,235,0.55), transparent 78%)`;
+    useMotionTemplate`radial-gradient(240px circle at ${x}px ${y}px, rgba(0,102,255,0.55), transparent 78%)`;
 
   return (
     <div

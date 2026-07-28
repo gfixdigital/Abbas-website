@@ -92,7 +92,7 @@ export function MouseGlow({ className }: { className?: string }) {
   }, [x, y]);
 
   const background =
-    useMotionTemplate`radial-gradient(600px circle at ${x}px ${y}px, rgba(37,99,235,0.09), transparent 70%)`;
+    useMotionTemplate`radial-gradient(600px circle at ${x}px ${y}px, rgba(0,102,255,0.09), transparent 70%)`;
 
   if (reduce || !enabled) return null;
 
