@@ -139,15 +139,6 @@ export function PageHeader({
 }) {
   return (
     <header className="relative overflow-hidden border-b border-line bg-bg-soft">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--line) 1px, transparent 1px)",
-          backgroundSize: "88px 100%",
-        }}
-      />
       <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-32 sm:px-8 sm:pb-20 sm:pt-40 lg:px-12">
         <Reveal>
           <p className="eyebrow mb-6">{eyebrow}</p>

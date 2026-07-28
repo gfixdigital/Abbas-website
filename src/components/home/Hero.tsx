@@ -60,7 +60,7 @@ export function Hero() {
             <motion.span variants={item} className="block">
               I build brands,
             </motion.span>
-            <motion.span variants={item} className="block text-muted">
+            <motion.span variants={item} className="block text-brand">
               and I train the people
             </motion.span>
             <motion.span variants={item} className="block">

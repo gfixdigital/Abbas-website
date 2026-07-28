@@ -9,20 +9,19 @@ import { SiteChrome } from "@/components/layout/SiteChrome";
 import { Toaster } from "@/components/ui/sonner";
 import { PersonJsonLd } from "@/components/shared/JsonLd";
 
-/* Display: geometric and architectural. Body: clean, modern.
-   Mono carries the eyebrow labels and every number on the site. */
+/* Display: Poppins for headings. Body: Montserrat. */
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  display: "swap",
+  weight: ["400", "600"],
+});
+
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
   weight: ["600", "700"],
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  variable: "--font-poppins",
-  display: "swap",
-  weight: ["400", "500"],
 });
 
 const jetbrainsMono = JetBrains_Mono({

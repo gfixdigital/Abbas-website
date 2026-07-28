@@ -81,8 +81,8 @@
   --color-danger: var(--danger);
   --color-success: var(--success);
 
-  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --radius-base: var(--radius);
@@ -124,7 +124,7 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "cv11", "ss01";
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -134,7 +134,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
   font-weight: 600;
   text-wrap: balance;
 }

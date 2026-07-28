@@ -70,15 +70,15 @@ export default async function ContactPage() {
                   {
                     icon: MessageCircle,
                     label: "WhatsApp",
-                    value: profile.phone,
-                    href: "https://wa.me/923365842012",
+                    value: "+92 336 5842012",
+                    href: "https://wa.me/9233658420212",
                     note: "Fastest response",
                   },
                   {
                     icon: Phone,
                     label: "Phone",
-                    value: profile.phone,
-                    href: `tel:${profile.phone.replace(/\s/g, "")}`,
+                    value: "+92 301 3021311",
+                    href: "tel:+923013021311",
                     note: "Pakistan Standard Time",
                   },
                 ].map((channel) => (

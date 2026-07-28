@@ -46,7 +46,7 @@ export const profile: Profile = {
   ],
   location: "Mingora, Swat, Khyber Pakhtunkhwa, Pakistan",
   email: "abbas@gfixdigital.com",
-  phone: "+92 336 5842012",
+  phone: "+92 301 3021311",
   headshotUrl:
     "https://ik.imagekit.io/9ajcnnodl/gfix-digital/team/1779988571199_cropped_image.jpg?tr=w-400,h-400,fo-auto",
   portraitUrl:

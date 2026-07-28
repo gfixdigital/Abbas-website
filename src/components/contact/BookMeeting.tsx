@@ -90,7 +90,7 @@ export function BookMeeting({ bookingUrl }: { bookingUrl?: string | null }) {
             <Magnetic>
               <Button asChild variant="brand" size="lg">
                 <a
-                  href="https://wa.me/923365842012?text=Hi%20Abbas%2C%20I%27d%20like%20to%20book%20a%20call."
+                  href="https://wa.me/9233658420212?text=Hi%20Abbas%2C%20I%27d%20like%20to%20book%20a%20call."
                   target="_blank"
                   rel="noreferrer noopener"
                 >
