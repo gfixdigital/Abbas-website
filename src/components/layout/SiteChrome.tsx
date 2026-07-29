@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { Navbar } from "./Navbar";
-import { Footer } from "./Footer";
 import { CommandPalette } from "./CommandPalette";
 import { BackToTop, ScrollProgress } from "@/components/motion/Interactions";
 import { LoadingScreen, PageTransition } from "@/components/motion/Transitions";
@@ -16,7 +15,13 @@ import { LoadingScreen, PageTransition } from "@/components/motion/Transitions";
  * cursor or intro curtain. Branching on the pathname here is what keeps the two
  * areas visually separate without needing two root layouts.
  */
-export function SiteChrome({ children }: { children: ReactNode }) {
+export function SiteChrome({
+  children,
+  footer,
+}: {
+  children: ReactNode;
+  footer?: ReactNode;
+}) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin") ?? false;
 
@@ -34,7 +39,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
         <PageTransition>{children}</PageTransition>
       </main>
 
-      <Footer />
+      {footer}
 
       <BackToTop />
     </>

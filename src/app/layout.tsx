@@ -3,10 +3,11 @@ import { Montserrat, Poppins, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { absoluteUrl } from "@/lib/utils";
-import { getProfile, getEducation, getSkillGroups, getSocialLinks, getSiteSettings, getCaseStudies } from "@/lib/data";
+import { getProfile, getEducation, getSkillGroups, getSocialLinks, getSiteSettings } from "@/lib/data";
 import { SiteProvider } from "@/lib/site-context";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { PersonJsonLd } from "@/components/shared/JsonLd";
 
@@ -89,6 +90,7 @@ export async function generateMetadata(): Promise<Metadata> {
       googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
     category: "technology",
+    icons: [{ rel: "icon", url: "/favicon.ico" }],
   };
 }
 
@@ -125,7 +127,7 @@ export default async function RootLayout({
               skillGroups={skillGroups}
               socialLinks={socialLinks}
             />
-            <SiteChrome>{children}</SiteChrome>
+            <SiteChrome footer={<Footer />}>{children}</SiteChrome>
             <Toaster />
           </ThemeProvider>
         </SiteProvider>
