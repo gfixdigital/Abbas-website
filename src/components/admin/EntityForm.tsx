@@ -66,7 +66,7 @@ export function valuesFromRow(
         values[field.name] = typeof raw === "string" ? raw.slice(0, 10) : "";
         break;
       default:
-        values[field.name] = (raw as string | null) ?? "";
+        values[field.name] = raw != null ? String(raw) : "";
     }
   }
 
