@@ -2,7 +2,7 @@
 
 Executive portfolio for **Muhammad Abbas**, Founder & CEO of [GFix Digital](https://gfixdigital.com), with a Supabase-backed CMS at `/admin`.
 
-Next.js 15 · React 19 · TypeScript · Tailwind CSS v4 · shadcn/ui · Radix · Framer Motion · Supabase · Resend
+Next.js 15 · React 19 · TypeScript · Tailwind CSS v4 · shadcn/ui · Radix · Framer Motion · Supabase · Resend 555
 
 ---
 
